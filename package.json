@@ -1,0 +1,14 @@
+{
+  "name": "bubble-nav",
+  "version": "1.0.0",
+  "description": "bubble nav experiment",
+  "main": "index.js",
+  "author": "Alvin Leung <alvinleung2009@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "parcel": "^2.10.0"
+  },
+  "scripts": {
+    "start": "rm -rf dist .parcel-cache && parcel src/index.html"
+  }
+}

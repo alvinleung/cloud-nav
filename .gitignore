@@ -1,0 +1,16 @@
+# Dependency directory
+node_modules
+
+# ignore yarn.lock
+yarn.lock
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# API keys and secrets
+.env
+
+# parcel build files
+.parcel-cache
+dist
