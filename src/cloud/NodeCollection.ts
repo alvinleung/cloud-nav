@@ -26,7 +26,7 @@ export function createNodeCollection(
     scale: config.scale || 1,
     radius: config.radius || 10,
     color: getRandomColor(),
-    weight: generateRandomFromRange(0.3, 1),
+    responsiveness: generateRandomFromRange(0.08, 0.14),
     parentCollection: parentCollection,
     nodes,
     createNode: function (nodeConfig: Partial<Node>) {
@@ -60,16 +60,17 @@ export function updateNodeCollection(
 
   if (nodeCollection.parentCollection) {
     // follow the parent node
-    nodeCollection.x = followTarget(
-      nodeCollection.x,
-      nodeCollection.parentCollection.x + nodeCollection.centerOffsetX,
-      0.08 * nodeCollection.weight
-    );
-    nodeCollection.y = followTarget(
-      nodeCollection.y,
-      nodeCollection.parentCollection.y + nodeCollection.centerOffsetY,
-      0.08 * nodeCollection.weight
-    );
+    updateNode(nodeCollection);
+    // nodeCollection.x = followTarget(
+    //   nodeCollection.x,
+    //   nodeCollection.parentCollection.x + nodeCollection.centerOffsetX,
+    //   0.08 * nodeCollection.weight
+    // );
+    // nodeCollection.y = followTarget(
+    //   nodeCollection.y,
+    //   nodeCollection.parentCollection.y + nodeCollection.centerOffsetY,
+    //   0.08 * nodeCollection.weight
+    // );
   }
 
   // update the children nodes

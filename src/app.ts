@@ -65,7 +65,7 @@ async function init({ canvas, context }: CanvasRenderer) {
           centerOffsetX: pos.x,
           centerOffsetY: pos.y,
           scale: generateRandomFromRange(0.2, 0.5),
-          color: "#000",
+          color: "#777",
         });
       }
     }

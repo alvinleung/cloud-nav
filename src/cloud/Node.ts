@@ -1,6 +1,7 @@
 import { ViewportAnchor } from "../ViewportAnchor";
 import { CanvasRenderer } from "../rendering/CanvasRenderer";
 import { getRandomColor } from "../utils/getRandomColor";
+import { generateRandomFromRange } from "../utils/utils";
 import { followTarget } from "./FollowTarget";
 import { NodeCollection } from "./NodeCollection";
 
@@ -13,7 +14,7 @@ export interface Node {
   scale: number;
   radius: number;
   color: string;
-  weight: number;
+  responsiveness: number;
 }
 
 export function createNode(
@@ -29,7 +30,7 @@ export function createNode(
     radius: config.radius || 10,
     color: config.color || getRandomColor(),
     parentCollection: collection,
-    weight: Math.random() + 0.1,
+    responsiveness: generateRandomFromRange(0.1, 0.02),
   };
   return node;
 }
@@ -44,10 +45,8 @@ export function updateNode(node: Node) {
   const targetX = parent.x + node.centerOffsetX;
   const targetY = parent.y + node.centerOffsetY;
 
-  const responsiveness = 0.1;
-
-  node.x = followTarget(node.x, targetX, responsiveness * node.weight);
-  node.y = followTarget(node.y, targetY, responsiveness * node.weight);
+  node.x = followTarget(node.x, targetX, node.responsiveness);
+  node.y = followTarget(node.y, targetY, node.responsiveness);
 }
 
 export function isPointWithinNode(x: number, y: number, node: Node) {
