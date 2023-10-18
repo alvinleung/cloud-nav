@@ -6,6 +6,8 @@ export interface PointerState {
   prevX: number;
   prevY: number;
   isPressed: boolean;
+  _isPressedPrev: boolean;
+  hasClicked: boolean;
   cleanup: () => void;
 }
 
@@ -18,6 +20,8 @@ export function createPointerStateProvider(): PointerState {
     prevX: 0,
     prevY: 0,
     isPressed: false,
+    _isPressedPrev: false,
+    hasClicked: false,
     cleanup,
   };
 
@@ -45,8 +49,18 @@ export function createPointerStateProvider(): PointerState {
 }
 
 export function updatePointerState(pointerState: PointerState) {
+  updateHasClickedState(pointerState);
   pointerState.velX = pointerState.x - pointerState.prevX;
   pointerState.velY = pointerState.y - pointerState.prevY;
   pointerState.prevX = pointerState.x;
   pointerState.prevY = pointerState.y;
+}
+
+function updateHasClickedState(pointerState: PointerState) {
+  // has clicked
+  pointerState.hasClicked = false;
+  if (pointerState._isPressedPrev && !pointerState.isPressed) {
+    pointerState.hasClicked = true;
+  }
+  pointerState._isPressedPrev = pointerState.isPressed;
 }

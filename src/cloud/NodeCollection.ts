@@ -10,6 +10,7 @@ import { PointerState } from "../pointer";
 export interface NodeCollection extends Node {
   nodes: Node[];
   isHovering: boolean;
+  isExpanded: boolean;
   showChildrenLink: boolean;
   createNode: (node: Partial<Node>) => Node;
   createNodeCollection: (node: Partial<NodeCollection>) => NodeCollection;
@@ -32,6 +33,7 @@ export function createNodeCollection(
     responsiveness: generateRandomFromRange(0.08, 0.14),
     parentCollection: parentCollection,
     isHovering: false,
+    isExpanded: false,
     showChildrenLink: config.showChildrenLink || false,
     nodes,
     createNode: function (nodeConfig: Partial<Node>) {
@@ -69,11 +71,9 @@ export function updateNodeCollection(
     updateNode(nodeCollection, pointerState);
   }
 
-  nodeCollection.isHovering = isPointWithinNode(
-    pointerState.x,
-    pointerState.y,
-    nodeCollection
-  );
+  nodeCollection.isHovering =
+    pointerState.hasClicked &&
+    isPointWithinNode(pointerState.x, pointerState.y, nodeCollection);
 
   // update the children nodes
   nodeCollection.nodes.forEach((node) => {

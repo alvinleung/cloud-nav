@@ -4,7 +4,7 @@ import { CanvasRenderer } from "../rendering/CanvasRenderer";
 import { getRandomColor } from "../utils/getRandomColor";
 import { generateRandomFromRange } from "../utils/utils";
 import { followTarget } from "./FollowTarget";
-import { NodeCollection } from "./NodeCollection";
+import { NodeCollection, isPointWithinNode } from "./NodeCollection";
 
 export interface Node {
   parentCollection: NodeCollection | undefined;
@@ -43,8 +43,11 @@ export function updateNode(node: Node, pointer: PointerState) {
     return;
   }
 
-  const targetX = parent.x + node.centerOffsetX;
-  const targetY = parent.y + node.centerOffsetY;
+  const isDragging =
+    pointer.isPressed && isPointWithinNode(pointer.x, pointer.y, node);
+
+  const targetX = isDragging ? pointer.x : parent.x + node.centerOffsetX;
+  const targetY = isDragging ? pointer.y : parent.y + node.centerOffsetY;
 
   node.x = followTarget(node.x, targetX, node.responsiveness);
   node.y = followTarget(node.y, targetY, node.responsiveness);
