@@ -4,7 +4,7 @@ import { getRandomColor } from "../utils/getRandomColor";
 import { generateRandomFromRange } from "../utils/utils";
 import { followTarget } from "./FollowTarget";
 import { MovablePoint } from "./Point";
-import { Node, createNode, renderNode, updateNode } from "./node";
+import { Node, createNode, renderNode, updateNode } from "./Node";
 
 export interface NodeCollection extends Node {
   nodes: Node[];

@@ -1,4 +1,4 @@
-import { Node, createNode, renderNode, updateNode } from "./cloud/node";
+import { Node, createNode, renderNode, updateNode } from "./cloud/Node";
 import { createPointerStateProvider, updatePointerState } from "./pointer";
 import {
   CanvasRenderer,
