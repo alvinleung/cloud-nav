@@ -1,4 +1,5 @@
 import { ViewportAnchor } from "../ViewportAnchor";
+import { PointerState } from "../pointer";
 import { CanvasRenderer } from "../rendering/CanvasRenderer";
 import { getRandomColor } from "../utils/getRandomColor";
 import { generateRandomFromRange } from "../utils/utils";
@@ -35,7 +36,7 @@ export function createNode(
   return node;
 }
 
-export function updateNode(node: Node) {
+export function updateNode(node: Node, pointer: PointerState) {
   // update node
   const parent = node.parentCollection;
   if (!parent) {
@@ -48,13 +49,6 @@ export function updateNode(node: Node) {
   node.x = followTarget(node.x, targetX, node.responsiveness);
   node.y = followTarget(node.y, targetY, node.responsiveness);
 }
-
-export function isPointWithinNode(x: number, y: number, node: Node) {
-  return (
-    Math.pow(node.x - x, 2) + Math.pow(node.y - y, 2) < Math.pow(node.radius, 2)
-  );
-}
-
 export function renderNode(node: Node, { context }: CanvasRenderer) {
   // render the node here
   context.fillStyle = node.color;

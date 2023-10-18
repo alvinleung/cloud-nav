@@ -27,8 +27,8 @@ export function updateViewportAnchor(
   //   viewportAnchor.velY = 0;
   // }
 
-  const movementXRange = 150;
-  const movementYRange = 150;
+  const movementXRange = 20;
+  const movementYRange = 20;
   viewportAnchor.x =
     (pointer.x / canvas.width) * movementXRange +
     canvas.width / 2 -

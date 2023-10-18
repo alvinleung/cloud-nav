@@ -5,9 +5,12 @@ import { generateRandomFromRange } from "../utils/utils";
 import { followTarget } from "./FollowTarget";
 import { MovablePoint } from "./Point";
 import { Node, createNode, renderNode, updateNode } from "./Node";
+import { PointerState } from "../pointer";
 
 export interface NodeCollection extends Node {
   nodes: Node[];
+  isHovering: boolean;
+  showChildrenLink: boolean;
   createNode: (node: Partial<Node>) => Node;
   createNodeCollection: (node: Partial<NodeCollection>) => NodeCollection;
 }
@@ -28,6 +31,8 @@ export function createNodeCollection(
     color: getRandomColor(),
     responsiveness: generateRandomFromRange(0.08, 0.14),
     parentCollection: parentCollection,
+    isHovering: false,
+    showChildrenLink: config.showChildrenLink || false,
     nodes,
     createNode: function (nodeConfig: Partial<Node>) {
       const newNode = createNode(nodeConfig, collection);
@@ -50,6 +55,7 @@ export function createNodeCollection(
 
 export function updateNodeCollection(
   nodeCollection: NodeCollection,
+  pointerState: PointerState,
   viewportAnchor?: ViewportAnchor
 ) {
   if (viewportAnchor) {
@@ -60,34 +66,50 @@ export function updateNodeCollection(
 
   if (nodeCollection.parentCollection) {
     // follow the parent node
-    updateNode(nodeCollection);
-    // nodeCollection.x = followTarget(
-    //   nodeCollection.x,
-    //   nodeCollection.parentCollection.x + nodeCollection.centerOffsetX,
-    //   0.08 * nodeCollection.weight
-    // );
-    // nodeCollection.y = followTarget(
-    //   nodeCollection.y,
-    //   nodeCollection.parentCollection.y + nodeCollection.centerOffsetY,
-    //   0.08 * nodeCollection.weight
-    // );
+    updateNode(nodeCollection, pointerState);
   }
+
+  nodeCollection.isHovering = isPointWithinNode(
+    pointerState.x,
+    pointerState.y,
+    nodeCollection
+  );
 
   // update the children nodes
   nodeCollection.nodes.forEach((node) => {
     // if it were a node collection
     if ((node as NodeCollection).nodes) {
-      updateNodeCollection(node as NodeCollection);
+      updateNodeCollection(node as NodeCollection, pointerState);
       return;
     }
-    updateNode(node);
+    updateNode(node, pointerState);
   });
+}
+
+export function isPointWithinNode(x: number, y: number, node: Node) {
+  return (
+    Math.pow(node.x - x, 2) + Math.pow(node.y - y, 2) < Math.pow(node.radius, 2)
+  );
 }
 
 export function renderNodeCollection(
   nodeCollection: NodeCollection,
   canvasRenderer: CanvasRenderer
 ) {
+  const context = canvasRenderer.context;
+
+  // render the line to each collection
+  if (nodeCollection.showChildrenLink) {
+    nodeCollection.nodes.forEach((node) => {
+      context.fillStyle = "#CCC";
+      context.strokeStyle = nodeCollection.color;
+      context.beginPath();
+      context.moveTo(nodeCollection.x, nodeCollection.y);
+      context.lineTo(node.x, node.y);
+      context.stroke();
+    });
+  }
+
   // render the node collection here
   nodeCollection.nodes.forEach((node) => {
     // if it were a node collection
@@ -98,9 +120,8 @@ export function renderNodeCollection(
     renderNode(node, canvasRenderer);
   });
 
-  const context = canvasRenderer.context;
   // render the node here
-  context.fillStyle = "#EEE";
+  context.fillStyle = nodeCollection.isHovering ? "#CCC" : "#EEE";
   context.strokeStyle = nodeCollection.color;
   context.beginPath();
   context.arc(
@@ -112,4 +133,5 @@ export function renderNodeCollection(
   );
   context.fill();
   context.stroke();
+  context.closePath();
 }

@@ -25,7 +25,7 @@ window.onload = () =>
   });
 
 const mouse = createPointerStateProvider();
-const nodeCollection = createNodeCollection({});
+const nodeCollection = createNodeCollection({ showChildrenLink: true });
 const viewportAnchor = createViewportAnchor();
 
 async function init({ canvas, context }: CanvasRenderer) {
@@ -44,6 +44,7 @@ async function init({ canvas, context }: CanvasRenderer) {
       centerOffsetX: pos.x,
       centerOffsetY: pos.y,
       radius: 100,
+      showChildrenLink: true,
     });
 
     for (let j = 0; j < 3; j++) {
@@ -76,6 +77,6 @@ function update(canvasRenderer: CanvasRenderer) {
   updatePointerState(mouse);
   updateViewportAnchor(mouse, canvasRenderer, viewportAnchor);
   // render update
-  updateNodeCollection(nodeCollection, viewportAnchor);
+  updateNodeCollection(nodeCollection, mouse, viewportAnchor);
   renderNodeCollection(nodeCollection, canvasRenderer);
 }
