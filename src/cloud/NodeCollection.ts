@@ -11,6 +11,7 @@ export interface NodeCollection extends Node {
   nodes: Node[];
   isHovering: boolean;
   isExpanded: boolean;
+  canToggleExpandState: boolean;
   showChildrenLink: boolean;
   createNode: (node: Partial<Node>) => Node;
   createNodeCollection: (node: Partial<NodeCollection>) => NodeCollection;
@@ -33,8 +34,13 @@ export function createNodeCollection(
     responsiveness: generateRandomFromRange(0.08, 0.14),
     parentCollection: parentCollection,
     isHovering: false,
-    isExpanded: false,
-    showChildrenLink: config.showChildrenLink || false,
+    isExpanded: config.isExpanded || false,
+    canToggleExpandState:
+      config.canToggleExpandState !== undefined
+        ? config.canToggleExpandState
+        : true,
+    showChildrenLink:
+      config.showChildrenLink !== undefined ? config.showChildrenLink : false,
     nodes,
     createNode: function (nodeConfig: Partial<Node>) {
       const newNode = createNode(nodeConfig, collection);
@@ -71,9 +77,19 @@ export function updateNodeCollection(
     updateNode(nodeCollection, pointerState);
   }
 
-  nodeCollection.isHovering =
-    pointerState.hasClicked &&
-    isPointWithinNode(pointerState.x, pointerState.y, nodeCollection);
+  nodeCollection.isHovering = isPointWithinNode(
+    pointerState.x,
+    pointerState.y,
+    nodeCollection
+  );
+
+  if (
+    nodeCollection.canToggleExpandState &&
+    nodeCollection.isHovering &&
+    pointerState.hasClicked
+  ) {
+    nodeCollection.isExpanded = !nodeCollection.isExpanded;
+  }
 
   // update the children nodes
   nodeCollection.nodes.forEach((node) => {

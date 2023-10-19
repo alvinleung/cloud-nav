@@ -25,7 +25,10 @@ window.onload = () =>
   });
 
 const mouse = createPointerStateProvider();
-const nodeCollection = createNodeCollection({ showChildrenLink: true });
+const nodeCollection = createNodeCollection({
+  showChildrenLink: true,
+  isExpanded: true,
+});
 const viewportAnchor = createViewportAnchor();
 
 async function init({ canvas, context }: CanvasRenderer) {
@@ -56,6 +59,8 @@ async function init({ canvas, context }: CanvasRenderer) {
         centerOffsetX: pos.x,
         centerOffsetY: pos.y,
         radius: 40,
+        isExpanded: true,
+        canToggleExpandState: false,
       });
 
       for (let k = 0; k < 20; k++) {

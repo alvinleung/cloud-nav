@@ -46,8 +46,8 @@ export function updateNode(node: Node, pointer: PointerState) {
   const isDragging =
     pointer.isPressed && isPointWithinNode(pointer.x, pointer.y, node);
 
-  const targetX = isDragging ? pointer.x : parent.x + node.centerOffsetX;
-  const targetY = isDragging ? pointer.y : parent.y + node.centerOffsetY;
+  const targetX = !parent.isExpanded ? parent.x : parent.x + node.centerOffsetX;
+  const targetY = !parent.isExpanded ? parent.y : parent.y + node.centerOffsetY;
 
   node.x = followTarget(node.x, targetX, node.responsiveness);
   node.y = followTarget(node.y, targetY, node.responsiveness);
