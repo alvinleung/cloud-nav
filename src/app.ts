@@ -28,6 +28,7 @@ const mouse = createPointerStateProvider();
 const nodeCollection = createNodeCollection({
   showChildrenLink: true,
   isExpanded: true,
+  canToggleExpandState: false,
 });
 const viewportAnchor = createViewportAnchor();
 
@@ -70,7 +71,7 @@ async function init({ canvas, context }: CanvasRenderer) {
         thirdLevelCollection.createNode({
           centerOffsetX: pos.x,
           centerOffsetY: pos.y,
-          scale: generateRandomFromRange(0.2, 0.5),
+          initialScale: generateRandomFromRange(0.2, 0.5),
           color: "#777",
         });
       }

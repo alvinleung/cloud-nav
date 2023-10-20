@@ -13,6 +13,7 @@ export interface Node {
   centerOffsetX: number;
   centerOffsetY: number;
   scale: number;
+  initialScale: number;
   radius: number;
   color: string;
   responsiveness: number;
@@ -28,6 +29,7 @@ export function createNode(
     centerOffsetX: config.centerOffsetX || 0,
     centerOffsetY: config.centerOffsetY || 0,
     scale: config.scale || 1,
+    initialScale: config.initialScale || 1,
     radius: config.radius || 10,
     color: config.color || getRandomColor(),
     parentCollection: collection,
@@ -48,6 +50,11 @@ export function updateNode(node: Node) {
 
   node.x = followTarget(node.x, targetX, node.responsiveness);
   node.y = followTarget(node.y, targetY, node.responsiveness);
+  node.scale = followTarget(
+    node.scale,
+    parent.isExpanded ? node.initialScale : 0,
+    node.responsiveness
+  );
 }
 export function renderNode(node: Node, { context }: CanvasRenderer) {
   // render the node here

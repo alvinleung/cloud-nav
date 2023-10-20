@@ -20,6 +20,10 @@ export interface NodeCollection extends Node {
   createNodeCollection: (node: Partial<NodeCollection>) => NodeCollection;
 }
 
+function withDefault(config: any, defaultValue: any) {
+  return config !== undefined ? config : defaultValue;
+}
+
 export function createNodeCollection(
   config: Partial<NodeCollection>,
   parentCollection?: NodeCollection
@@ -27,23 +31,20 @@ export function createNodeCollection(
   const nodes: Node[] = [];
 
   const collection: NodeCollection = {
-    x: config.x || 0,
-    y: config.y || 0,
-    centerOffsetX: config.centerOffsetX || 0,
-    centerOffsetY: config.centerOffsetY || 0,
-    scale: config.scale || 1,
-    radius: config.radius || 10,
+    x: withDefault(config.x, 0),
+    y: withDefault(config.y, 0),
+    centerOffsetX: withDefault(config.centerOffsetX, 0),
+    centerOffsetY: withDefault(config.centerOffsetY, 0),
+    scale: withDefault(config.scale, 1),
+    initialScale: withDefault(config.initialScale, 1),
+    radius: withDefault(config.radius, 10),
     color: getRandomColor(),
     responsiveness: generateRandomFromRange(0.08, 0.14),
     parentCollection: parentCollection,
     isHovering: false,
     isExpanded: config.isExpanded || false,
-    canToggleExpandState:
-      config.canToggleExpandState !== undefined
-        ? config.canToggleExpandState
-        : true,
-    showChildrenLink:
-      config.showChildrenLink !== undefined ? config.showChildrenLink : false,
+    canToggleExpandState: withDefault(config.canToggleExpandState, true),
+    showChildrenLink: withDefault(config.showChildrenLink, false),
     nodes,
     initialDragOffsetX: 0,
     initialDragOffsetY: 0,
