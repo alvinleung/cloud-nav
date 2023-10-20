@@ -142,11 +142,20 @@ function updateNodeCollectionHoverState(
   nodeCollection: NodeCollection,
   pointerState: PointerState
 ) {
-  nodeCollection.isHovering = isPointWithinNode(
-    pointerState.x,
-    pointerState.y,
-    nodeCollection
-  );
+  nodeCollection.isHovering =
+    (pointerState.hoveringCollection === null ||
+      pointerState.hoveringCollection === nodeCollection) &&
+    isPointWithinNode(pointerState.x, pointerState.y, nodeCollection);
+  if (nodeCollection.isHovering) {
+    pointerState.hoveringCollection = nodeCollection;
+  }
+  // clean up when no longer hovering
+  if (
+    !nodeCollection.isHovering &&
+    pointerState.hoveringCollection === nodeCollection
+  ) {
+    pointerState.hoveringCollection = null;
+  }
 }
 
 function updateNodeCollectionDrag(

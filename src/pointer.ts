@@ -1,3 +1,5 @@
+import { NodeCollection } from "./cloud/NodeCollection";
+
 export interface PointerState {
   x: number;
   y: number;
@@ -12,6 +14,8 @@ export interface PointerState {
   hasClicked: boolean;
   isDragging: boolean;
   cleanup: () => void;
+  changeCursor: (cursor: string) => void;
+  hoveringCollection: null | NodeCollection;
 }
 
 export function createPointerStateProvider(): PointerState {
@@ -28,7 +32,9 @@ export function createPointerStateProvider(): PointerState {
     hasPointerDown: false,
     isDragging: false,
     cleanup,
+    changeCursor,
     hasClicked: false,
+    hoveringCollection: null,
   };
 
   function handlePointerMove(e: PointerEvent) {
@@ -51,11 +57,25 @@ export function createPointerStateProvider(): PointerState {
     window.removeEventListener("pointerup", handlePointerUp);
   }
 
+  let prevCursor = "default";
+  function changeCursor(cursor: string) {
+    if (cursor === prevCursor) return;
+
+    document.body.style.cursor = cursor;
+    prevCursor = cursor;
+  }
+
   return pointerState;
 }
 
 export function updatePointerState(pointerState: PointerState) {
   updatePressedStates(pointerState);
+  // update hoverstate
+  if (pointerState.hoveringCollection !== null) {
+    pointerState.changeCursor("pointer");
+  } else {
+    pointerState.changeCursor("default");
+  }
 
   pointerState.velX = pointerState.x - pointerState.prevX;
   pointerState.velY = pointerState.y - pointerState.prevY;
@@ -65,7 +85,7 @@ export function updatePointerState(pointerState: PointerState) {
 
 function updatePressedStates(pointerState: PointerState) {
   // update drag states first because they should be one tick behind the pressed state
-  if (pointerState.isPressed && isPointerMoving(pointerState, 5)) {
+  if (pointerState.isPressed && isPointerMoving(pointerState, 2)) {
     pointerState.isDragging = true;
   }
   if (pointerState.hasPointerUp) {
