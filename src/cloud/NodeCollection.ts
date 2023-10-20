@@ -12,6 +12,9 @@ export interface NodeCollection extends Node {
   isHovering: boolean;
   isExpanded: boolean;
   canToggleExpandState: boolean;
+  initialDragOffsetX: number;
+  initialDragOffsetY: number;
+  isDragging: boolean;
   showChildrenLink: boolean;
   createNode: (node: Partial<Node>) => Node;
   createNodeCollection: (node: Partial<NodeCollection>) => NodeCollection;
@@ -42,6 +45,8 @@ export function createNodeCollection(
     showChildrenLink:
       config.showChildrenLink !== undefined ? config.showChildrenLink : false,
     nodes,
+    initialDragOffsetX: 0,
+    initialDragOffsetY: 0,
     createNode: function (nodeConfig: Partial<Node>) {
       const newNode = createNode(nodeConfig, collection);
       newNode.x = collection.x;
@@ -56,8 +61,8 @@ export function createNodeCollection(
       nodes.push(nodeCollection);
       return nodeCollection;
     },
+    isDragging: false,
   };
-
   return collection;
 }
 
@@ -72,23 +77,40 @@ export function updateNodeCollection(
     nodeCollection.y = followTarget(nodeCollection.y, viewportAnchor.y, 0.1);
   }
 
-  if (nodeCollection.parentCollection) {
-    // follow the parent node
-    updateNode(nodeCollection, pointerState);
+  // update the states
+  updateNodeCollectionHoverState(nodeCollection, pointerState);
+  updateNodeCollectionExpandState(nodeCollection, pointerState);
+  updateNodeCollectionDrag(nodeCollection, pointerState);
+
+  // follow the parent node positions
+  if (nodeCollection.isDragging) {
+    nodeCollection.x = followTarget(
+      nodeCollection.x,
+      pointerState.x - nodeCollection.initialDragOffsetX,
+      0.1
+    );
+    nodeCollection.y = followTarget(
+      nodeCollection.y,
+      pointerState.y - nodeCollection.initialDragOffsetY,
+      0.1
+    );
+  }
+  if (!nodeCollection.isDragging) {
+    updateNode(nodeCollection);
   }
 
-  nodeCollection.isHovering = isPointWithinNode(
-    pointerState.x,
-    pointerState.y,
-    nodeCollection
-  );
-
-  if (
-    nodeCollection.canToggleExpandState &&
-    nodeCollection.isHovering &&
-    pointerState.hasClicked
-  ) {
-    nodeCollection.isExpanded = !nodeCollection.isExpanded;
+  // snap to mouse
+  if (nodeCollection.isHovering) {
+    nodeCollection.x = followTarget(
+      nodeCollection.x,
+      nodeCollection.x + (pointerState.x - nodeCollection.x) * 0.5,
+      0.1
+    );
+    nodeCollection.y = followTarget(
+      nodeCollection.y,
+      nodeCollection.y + (pointerState.y - nodeCollection.y) * 0.5,
+      0.1
+    );
   }
 
   // update the children nodes
@@ -98,8 +120,47 @@ export function updateNodeCollection(
       updateNodeCollection(node as NodeCollection, pointerState);
       return;
     }
-    updateNode(node, pointerState);
+    updateNode(node);
   });
+}
+
+function updateNodeCollectionExpandState(
+  nodeCollection: NodeCollection,
+  pointerState: PointerState
+) {
+  // handle toggling of expand state
+  if (
+    nodeCollection.canToggleExpandState &&
+    nodeCollection.isHovering &&
+    pointerState.hasClicked
+  ) {
+    nodeCollection.isExpanded = !nodeCollection.isExpanded;
+  }
+}
+function updateNodeCollectionHoverState(
+  nodeCollection: NodeCollection,
+  pointerState: PointerState
+) {
+  nodeCollection.isHovering = isPointWithinNode(
+    pointerState.x,
+    pointerState.y,
+    nodeCollection
+  );
+}
+
+function updateNodeCollectionDrag(
+  nodeCollection: NodeCollection,
+  pointerstate: PointerState
+) {
+  if (pointerstate.hasPointerDown && nodeCollection.isHovering) {
+    nodeCollection.isDragging = true;
+    nodeCollection.initialDragOffsetX = pointerstate.x - nodeCollection.x;
+    nodeCollection.initialDragOffsetY = pointerstate.y - nodeCollection.y;
+  }
+
+  if (pointerstate.hasPointerUp) {
+    nodeCollection.isDragging = false;
+  }
 }
 
 export function isPointWithinNode(x: number, y: number, node: Node) {
@@ -118,7 +179,7 @@ export function renderNodeCollection(
   if (nodeCollection.showChildrenLink) {
     nodeCollection.nodes.forEach((node) => {
       context.fillStyle = "#CCC";
-      context.strokeStyle = nodeCollection.color;
+      context.strokeStyle = nodeCollection.isExpanded ? "#CCC" : "#000";
       context.beginPath();
       context.moveTo(nodeCollection.x, nodeCollection.y);
       context.lineTo(node.x, node.y);

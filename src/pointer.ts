@@ -7,12 +7,15 @@ export interface PointerState {
   prevY: number;
   isPressed: boolean;
   _isPressedPrev: boolean;
+  hasPointerUp: boolean;
+  hasPointerDown: boolean;
   hasClicked: boolean;
+  isDragging: boolean;
   cleanup: () => void;
 }
 
 export function createPointerStateProvider(): PointerState {
-  const pointerState = {
+  const pointerState: PointerState = {
     x: 0,
     y: 0,
     velX: 0,
@@ -21,8 +24,11 @@ export function createPointerStateProvider(): PointerState {
     prevY: 0,
     isPressed: false,
     _isPressedPrev: false,
-    hasClicked: false,
+    hasPointerUp: false,
+    hasPointerDown: false,
+    isDragging: false,
     cleanup,
+    hasClicked: false,
   };
 
   function handlePointerMove(e: PointerEvent) {
@@ -49,18 +55,36 @@ export function createPointerStateProvider(): PointerState {
 }
 
 export function updatePointerState(pointerState: PointerState) {
-  updateHasClickedState(pointerState);
+  updatePressedStates(pointerState);
+
   pointerState.velX = pointerState.x - pointerState.prevX;
   pointerState.velY = pointerState.y - pointerState.prevY;
   pointerState.prevX = pointerState.x;
   pointerState.prevY = pointerState.y;
 }
 
-function updateHasClickedState(pointerState: PointerState) {
-  // has clicked
-  pointerState.hasClicked = false;
-  if (pointerState._isPressedPrev && !pointerState.isPressed) {
-    pointerState.hasClicked = true;
+function updatePressedStates(pointerState: PointerState) {
+  // update drag states first because they should be one tick behind the pressed state
+  if (pointerState.isPressed && isPointerMoving(pointerState, 5)) {
+    pointerState.isDragging = true;
   }
+  if (pointerState.hasPointerUp) {
+    pointerState.isDragging = false;
+  }
+
+  pointerState.hasPointerUp =
+    pointerState._isPressedPrev && !pointerState.isPressed;
+  pointerState.hasPointerDown =
+    !pointerState._isPressedPrev && pointerState.isPressed;
+  pointerState.hasClicked =
+    !pointerState.isDragging && pointerState.hasPointerUp;
+
   pointerState._isPressedPrev = pointerState.isPressed;
+}
+
+function isPointerMoving(pointerState: PointerState, threshold: number) {
+  return (
+    Math.abs(pointerState.velX) > threshold &&
+    Math.abs(pointerState.velY) > threshold
+  );
 }

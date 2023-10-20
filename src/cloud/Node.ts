@@ -36,15 +36,12 @@ export function createNode(
   return node;
 }
 
-export function updateNode(node: Node, pointer: PointerState) {
+export function updateNode(node: Node) {
   // update node
   const parent = node.parentCollection;
   if (!parent) {
     return;
   }
-
-  const isDragging =
-    pointer.isPressed && isPointWithinNode(pointer.x, pointer.y, node);
 
   const targetX = !parent.isExpanded ? parent.x : parent.x + node.centerOffsetX;
   const targetY = !parent.isExpanded ? parent.y : parent.y + node.centerOffsetY;
