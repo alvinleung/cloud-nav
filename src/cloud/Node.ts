@@ -14,26 +14,32 @@ export interface Node {
   centerOffsetY: number;
   scale: number;
   initialScale: number;
+  targetScale: number;
   radius: number;
   color: string;
   responsiveness: number;
+  opacity: number;
+  targetOpacity: number;
 }
 
 export function createNode(
   config: Partial<Node>,
   collection?: NodeCollection
 ): Node {
-  const node = {
+  const node: Node = {
     x: config.x || 0,
     y: config.y || 0,
     centerOffsetX: config.centerOffsetX || 0,
     centerOffsetY: config.centerOffsetY || 0,
     scale: config.scale || 1,
     initialScale: config.initialScale || 1,
+    targetScale: config.targetScale || config.initialScale || 1,
     radius: config.radius || 10,
     color: config.color || getRandomColor(),
     parentCollection: collection,
     responsiveness: generateRandomFromRange(0.1, 0.02),
+    opacity: 1,
+    targetOpacity: 1,
   };
   return node;
 }
@@ -52,14 +58,21 @@ export function updateNode(node: Node) {
   node.y = followTarget(node.y, targetY, node.responsiveness);
   node.scale = followTarget(
     node.scale,
-    parent.isExpanded ? node.initialScale : 0,
+    parent.isExpanded ? node.targetScale : 0,
+    node.responsiveness
+  );
+  node.opacity = followTarget(
+    node.opacity,
+    node.targetOpacity,
     node.responsiveness
   );
 }
 export function renderNode(node: Node, { context }: CanvasRenderer) {
   // render the node here
+  context.globalAlpha = node.opacity;
   context.fillStyle = node.color;
   context.beginPath();
   context.arc(node.x, node.y, node.radius * node.scale, 0, 2 * Math.PI);
   context.fill();
+  context.globalAlpha = 1;
 }

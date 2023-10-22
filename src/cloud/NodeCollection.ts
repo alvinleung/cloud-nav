@@ -63,6 +63,9 @@ export function createNodeCollection(
       return nodeCollection;
     },
     isDragging: false,
+    targetScale: config.targetScale || config.initialScale || 1,
+    opacity: 1,
+    targetOpacity: 1,
   };
   return collection;
 }
@@ -139,22 +142,24 @@ function updateNodeCollectionExpandState(
     // collapse other node collection
 
     // close all children
-    if (!nodeCollection.isExpanded) collapseAllChildren(nodeCollection);
-    if (nodeCollection.isExpanded) collapseOtherBranch(nodeCollection);
+    if (!nodeCollection.isExpanded) {
+      updateChildrenNodeCollections(nodeCollection, (collection) => {
+        collection.isExpanded = false;
+      });
+    }
+    // close unrelated collections
+    if (nodeCollection.isExpanded) {
+      updateOtherNodeCollections(nodeCollection, (collection) => {
+        collection.isExpanded = false;
+      });
+    }
   }
 }
 
-function collapseAllChildren(collection: NodeCollection) {
-  if (!collection.canToggleExpandState) return;
-
-  collection.isExpanded = false;
-  collection.nodes.forEach((node) => {
-    if (!(node as NodeCollection).nodes) return;
-    collapseAllChildren(node as NodeCollection);
-  });
-}
-
-function collapseOtherBranch(self: NodeCollection) {
+function updateOtherNodeCollections(
+  self: NodeCollection,
+  callback: (collection: NodeCollection) => void
+) {
   const traverseUpwardAndCollapseOtherBranches = (
     self: NodeCollection,
     prevNode?: NodeCollection
@@ -162,7 +167,7 @@ function collapseOtherBranch(self: NodeCollection) {
     if (!self.nodes) return;
     self.nodes.forEach((node) => {
       if (node === prevNode) return;
-      collapseAllChildren(node as NodeCollection);
+      updateChildrenNodeCollections(node as NodeCollection, callback);
     });
 
     // continue traverse upwards when it doesn't hit the root node
@@ -172,23 +177,49 @@ function collapseOtherBranch(self: NodeCollection) {
       self
     );
   };
-  traverseUpwardAndCollapseOtherBranches(
-    self.parentCollection as NodeCollection,
-    self
-  );
+
+  traverseUpwardAndCollapseOtherBranches(self, undefined);
+}
+function updateChildrenNodeCollections(
+  collection: NodeCollection,
+  callback: (collection: NodeCollection) => void
+) {
+  if (!collection.canToggleExpandState) return;
+  callback(collection);
+  collection.nodes.forEach((node) => {
+    if (!(node as NodeCollection).nodes) return;
+    updateChildrenNodeCollections(node as NodeCollection, callback);
+  });
 }
 
 function updateNodeCollectionHoverState(
   nodeCollection: NodeCollection,
   pointerState: PointerState
 ) {
-  nodeCollection.isHovering =
-    (pointerState.hoveringCollection === null ||
-      pointerState.hoveringCollection === nodeCollection) &&
-    isPointWithinNode(pointerState.x, pointerState.y, nodeCollection);
+  const isWithinNode = isPointWithinNode(
+    pointerState.x,
+    pointerState.y,
+    nodeCollection
+  );
+
+  const okayToHover =
+    pointerState.hoveringCollection === null ||
+    pointerState.hoveringCollection === nodeCollection;
+
+  if (isWithinNode && okayToHover && !nodeCollection.isHovering) {
+    onBeginHover(nodeCollection);
+    nodeCollection.isHovering = true;
+  }
+
+  if (!isWithinNode && nodeCollection.isHovering) {
+    onExitHover(nodeCollection);
+    nodeCollection.isHovering = false;
+  }
+
   if (nodeCollection.isHovering) {
     pointerState.hoveringCollection = nodeCollection;
   }
+
   // clean up when no longer hovering
   if (
     !nodeCollection.isHovering &&
@@ -196,6 +227,17 @@ function updateNodeCollectionHoverState(
   ) {
     pointerState.hoveringCollection = null;
   }
+}
+
+function onBeginHover(nodeCollection: NodeCollection) {
+  updateOtherNodeCollections(nodeCollection, (collection) => {
+    collection.targetOpacity = 0.2;
+  });
+}
+function onExitHover(nodeCollection: NodeCollection) {
+  updateOtherNodeCollections(nodeCollection, (collection) => {
+    collection.targetOpacity = 1;
+  });
 }
 
 function updateNodeCollectionDrag(
@@ -229,7 +271,9 @@ export function renderNodeCollection(
   if (nodeCollection.showChildrenLink) {
     nodeCollection.nodes.forEach((node) => {
       context.fillStyle = "#CCC";
-      context.strokeStyle = nodeCollection.isExpanded ? "#CCC" : "#000";
+      context.strokeStyle = nodeCollection.isExpanded
+        ? "#CCC"
+        : "rgba(0,0,0,0)";
       context.beginPath();
       context.moveTo(nodeCollection.x, nodeCollection.y);
       context.lineTo(node.x, node.y);
@@ -248,7 +292,9 @@ export function renderNodeCollection(
   });
 
   // render the node here
-  context.fillStyle = nodeCollection.isHovering ? "#CCC" : "#EEE";
+  context.fillStyle = nodeCollection.isHovering
+    ? "#CCC"
+    : `rgba(233,233,233,${nodeCollection.opacity})`;
   context.strokeStyle = nodeCollection.color;
   context.beginPath();
   context.arc(
