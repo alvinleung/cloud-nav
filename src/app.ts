@@ -94,7 +94,7 @@ async function init({ canvas, context }: CanvasRenderer) {
             centerOffsetX: pos.x,
             centerOffsetY: pos.y,
             initialScale: generateRandomFromRange(0.2, 0.5),
-            color: "#CCC",
+            color: "rgba(0,0,0,.1)",
           });
         }
       }
