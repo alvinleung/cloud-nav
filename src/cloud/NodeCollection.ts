@@ -136,8 +136,48 @@ function updateNodeCollectionExpandState(
     pointerState.hasClicked
   ) {
     nodeCollection.isExpanded = !nodeCollection.isExpanded;
+    // collapse other node collection
+
+    // close all children
+    if (!nodeCollection.isExpanded) collapseAllChildren(nodeCollection);
+    if (nodeCollection.isExpanded) collapseOtherBranch(nodeCollection);
   }
 }
+
+function collapseAllChildren(collection: NodeCollection) {
+  if (!collection.canToggleExpandState) return;
+
+  collection.isExpanded = false;
+  collection.nodes.forEach((node) => {
+    if (!(node as NodeCollection).nodes) return;
+    collapseAllChildren(node as NodeCollection);
+  });
+}
+
+function collapseOtherBranch(self: NodeCollection) {
+  const traverseUpwardAndCollapseOtherBranches = (
+    self: NodeCollection,
+    prevNode?: NodeCollection
+  ) => {
+    if (!self.nodes) return;
+    self.nodes.forEach((node) => {
+      if (node === prevNode) return;
+      collapseAllChildren(node as NodeCollection);
+    });
+
+    // continue traverse upwards when it doesn't hit the root node
+    if (!self.parentCollection) return;
+    traverseUpwardAndCollapseOtherBranches(
+      self.parentCollection as NodeCollection,
+      self
+    );
+  };
+  traverseUpwardAndCollapseOtherBranches(
+    self.parentCollection as NodeCollection,
+    self
+  );
+}
+
 function updateNodeCollectionHoverState(
   nodeCollection: NodeCollection,
   pointerState: PointerState

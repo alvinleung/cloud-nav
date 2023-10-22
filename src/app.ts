@@ -26,6 +26,7 @@ window.onload = () =>
 
 const mouse = createPointerStateProvider();
 const nodeCollection = createNodeCollection({
+  radius: 100,
   showChildrenLink: true,
   isExpanded: true,
   canToggleExpandState: false,
@@ -52,28 +53,50 @@ async function init({ canvas, context }: CanvasRenderer) {
     });
 
     for (let j = 0; j < 3; j++) {
-      const angleVariations = generateRandomFromRange(-10, 10);
-      const angle = (j / 3) * 120;
+      const secondLevelAngle = (j / 3) * 120;
 
-      const pos = getPositionFromAngleRadius(160, baseLevelAngle + angle);
+      const pos = getPositionFromAngleRadius(
+        160,
+        baseLevelAngle + secondLevelAngle
+      );
       const thirdLevelCollection = secondLevelCollection.createNodeCollection({
         centerOffsetX: pos.x,
         centerOffsetY: pos.y,
         radius: 40,
-        isExpanded: true,
-        canToggleExpandState: false,
+        isExpanded: false,
+        canToggleExpandState: true,
+        showChildrenLink: true,
       });
 
-      for (let k = 0; k < 20; k++) {
-        const angle = (k / 20) * 100;
-        const dist = generateRandomFromRange(50, 200);
-        const pos = getPositionFromAngleRadius(dist, baseLevelAngle + angle);
-        thirdLevelCollection.createNode({
-          centerOffsetX: pos.x,
-          centerOffsetY: pos.y,
-          initialScale: generateRandomFromRange(0.2, 0.5),
-          color: "#777",
-        });
+      for (let j = 0; j < 3; j++) {
+        const angleRange = 120;
+        const angle2 = (j / 3) * angleRange;
+
+        const pos = getPositionFromAngleRadius(
+          80,
+          baseLevelAngle + secondLevelAngle + angle2 - angleRange / 4
+        );
+        const thirdLevelCollection2 = thirdLevelCollection.createNodeCollection(
+          {
+            centerOffsetX: pos.x,
+            centerOffsetY: pos.y,
+            radius: 20,
+            isExpanded: true,
+            canToggleExpandState: false,
+          }
+        );
+
+        for (let k = 0; k < 10; k++) {
+          const angle = (k / 10) * 100;
+          const dist = generateRandomFromRange(50, 200);
+          const pos = getPositionFromAngleRadius(dist, baseLevelAngle + angle);
+          thirdLevelCollection2.createNode({
+            centerOffsetX: pos.x,
+            centerOffsetY: pos.y,
+            initialScale: generateRandomFromRange(0.2, 0.5),
+            color: "#CCC",
+          });
+        }
       }
     }
   }

@@ -76,7 +76,6 @@ export function updatePointerState(pointerState: PointerState) {
   } else {
     pointerState.changeCursor("default");
   }
-
   pointerState.velX = pointerState.x - pointerState.prevX;
   pointerState.velY = pointerState.y - pointerState.prevY;
   pointerState.prevX = pointerState.x;
@@ -91,7 +90,6 @@ function updatePressedStates(pointerState: PointerState) {
   if (pointerState.hasPointerUp) {
     pointerState.isDragging = false;
   }
-
   pointerState.hasPointerUp =
     pointerState._isPressedPrev && !pointerState.isPressed;
   pointerState.hasPointerDown =
