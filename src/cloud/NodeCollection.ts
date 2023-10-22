@@ -12,6 +12,7 @@ export interface NodeCollection extends Node {
   isHovering: boolean;
   isExpanded: boolean;
   canToggleExpandState: boolean;
+  isLastCollectionLevel: boolean;
   initialDragOffsetX: number;
   initialDragOffsetY: number;
   isDragging: boolean;
@@ -48,11 +49,13 @@ export function createNodeCollection(
     nodes,
     initialDragOffsetX: 0,
     initialDragOffsetY: 0,
+    isLastCollectionLevel: true,
     createNode: function (nodeConfig: Partial<Node>) {
       const newNode = createNode(nodeConfig, collection);
       newNode.x = collection.x;
       newNode.y = collection.y;
       nodes.push(newNode);
+      collection.isLastCollectionLevel = true;
       return newNode;
     },
     createNodeCollection: function (config: Partial<NodeCollection>) {
@@ -60,6 +63,7 @@ export function createNodeCollection(
       nodeCollection.x = collection.x;
       nodeCollection.y = collection.y;
       nodes.push(nodeCollection);
+      collection.isLastCollectionLevel = false;
       return nodeCollection;
     },
     isDragging: false,
@@ -144,12 +148,14 @@ function updateNodeCollectionExpandState(
     // close all children
     if (!nodeCollection.isExpanded) {
       updateChildrenNodeCollections(nodeCollection, (collection) => {
+        if (!collection.canToggleExpandState) return;
         collection.isExpanded = false;
       });
     }
     // close unrelated collections
     if (nodeCollection.isExpanded) {
       updateOtherNodeCollections(nodeCollection, (collection) => {
+        if (!collection.canToggleExpandState) return;
         collection.isExpanded = false;
       });
     }
@@ -180,12 +186,19 @@ function updateOtherNodeCollections(
 
   traverseUpwardAndCollapseOtherBranches(self, undefined);
 }
+
 function updateChildrenNodeCollections(
   collection: NodeCollection,
   callback: (collection: NodeCollection) => void
 ) {
-  if (!collection.canToggleExpandState) return;
   callback(collection);
+
+  if (collection.isLastCollectionLevel) {
+    return;
+  }
+  if (!collection.nodes) {
+    return;
+  }
   collection.nodes.forEach((node) => {
     if (!(node as NodeCollection).nodes) return;
     updateChildrenNodeCollections(node as NodeCollection, callback);
@@ -207,7 +220,7 @@ function updateNodeCollectionHoverState(
     pointerState.hoveringCollection === nodeCollection;
 
   if (isWithinNode && okayToHover && !nodeCollection.isHovering) {
-    onBeginHover(nodeCollection);
+    onEnterHover(nodeCollection);
     nodeCollection.isHovering = true;
   }
 
@@ -229,7 +242,7 @@ function updateNodeCollectionHoverState(
   }
 }
 
-function onBeginHover(nodeCollection: NodeCollection) {
+function onEnterHover(nodeCollection: NodeCollection) {
   updateOtherNodeCollections(nodeCollection, (collection) => {
     collection.targetOpacity = 0.2;
   });
