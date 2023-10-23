@@ -267,11 +267,13 @@ function updateNodeCollectionHoverState(
 }
 
 function onEnterHover(nodeCollection: NodeCollection) {
+  nodeCollection.targetScale = nodeCollection.initialScale * 1.1;
   updateOtherNodeCollections(nodeCollection, (collection) => {
     collection.targetOpacity = 0.2;
   });
 }
 function onExitHover(nodeCollection: NodeCollection) {
+  nodeCollection.targetScale = nodeCollection.initialScale;
   updateOtherNodeCollections(nodeCollection, (collection) => {
     collection.targetOpacity = 1;
   });

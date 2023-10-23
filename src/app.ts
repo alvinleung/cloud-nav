@@ -44,46 +44,60 @@ async function init({ canvas, context }: CanvasRenderer) {
   const bigCircleCount = 5;
   for (let i = 0; i < bigCircleCount; i++) {
     const baseLevelAngle = (i / bigCircleCount) * 360;
-    const pos = getPositionFromAngleRadius(225, baseLevelAngle);
+    const angleVariations = generateRandomFromRange(0, 40);
+    const distVariations = generateRandomFromRange(-60, 60);
+    const pos = getPositionFromAngleRadius(
+      225 + distVariations,
+      baseLevelAngle + angleVariations
+    );
     const secondLevelCollection = nodeCollection.createNodeCollection({
       centerOffsetX: pos.x,
       centerOffsetY: pos.y,
-      radius: 100,
+      radius: 60,
       showChildrenLink: true,
+      isExpanded: true,
+      canToggleExpandState: false,
     });
 
     for (let j = 0; j < 3; j++) {
-      const angleRange = 120;
+      const angleRange = 140;
       const secondLevelAngle = (j / 3) * angleRange;
       const angleOffset = -angleRange / 3;
+      const angleVariations = generateRandomFromRange(0, 20);
 
       const pos = getPositionFromAngleRadius(
         160,
-        baseLevelAngle + secondLevelAngle + angleOffset
+        baseLevelAngle + secondLevelAngle + angleOffset + angleVariations
       );
       const thirdLevelCollection = secondLevelCollection.createNodeCollection({
         centerOffsetX: pos.x,
         centerOffsetY: pos.y,
-        radius: 40,
-        isExpanded: false, 
-        canToggleExpandState: true,
+        radius: 30,
+        isExpanded: true,
+        canToggleExpandState: false,
         showChildrenLink: true,
       });
 
       for (let j = 0; j < 3; j++) {
-        const angleRange = 120;
+        const angleRange = 80;
         const angle2 = (j / 3) * angleRange;
         const angleOffset2 = angleOffset - angleRange / 3;
+        const dist = generateRandomFromRange(60, 120);
+        const angleVariations = generateRandomFromRange(-10, 10);
 
         const pos = getPositionFromAngleRadius(
-          80,
-          baseLevelAngle + secondLevelAngle + angle2 + angleOffset2
+          dist,
+          baseLevelAngle +
+            secondLevelAngle +
+            angle2 +
+            angleOffset2 +
+            angleVariations
         );
         const thirdLevelCollection2 = thirdLevelCollection.createNodeCollection(
           {
             centerOffsetX: pos.x,
             centerOffsetY: pos.y,
-            radius: 20,
+            radius: 10,
             isExpanded: true,
             canToggleExpandState: false,
           }
