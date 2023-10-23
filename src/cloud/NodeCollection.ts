@@ -137,29 +137,53 @@ function updateNodeCollectionExpandState(
   pointerState: PointerState
 ) {
   // handle toggling of expand state
+
   if (
     nodeCollection.canToggleExpandState &&
     nodeCollection.isHovering &&
-    pointerState.hasClicked
+    !nodeCollection.isExpanded
   ) {
-    nodeCollection.isExpanded = !nodeCollection.isExpanded;
-    // collapse other node collection
-
-    // close all children
-    if (!nodeCollection.isExpanded) {
-      updateChildrenNodeCollections(nodeCollection, (collection) => {
-        if (!collection.canToggleExpandState) return;
-        collection.isExpanded = false;
-      });
-    }
-    // close unrelated collections
-    if (nodeCollection.isExpanded) {
-      updateOtherNodeCollections(nodeCollection, (collection) => {
-        if (!collection.canToggleExpandState) return;
-        collection.isExpanded = false;
-      });
-    }
+    nodeCollection.isExpanded = true;
+    updateOtherNodeCollections(nodeCollection, (collection) => {
+      if (!collection.canToggleExpandState) return;
+      collection.isExpanded = false;
+    });
   }
+
+  if (
+    nodeCollection.canToggleExpandState &&
+    !nodeCollection.isHovering &&
+    nodeCollection.isExpanded
+  ) {
+    // nodeCollection.isExpanded = false;
+    // updateChildrenNodeCollections(nodeCollection, (collection) => {
+    //   if (!collection.canToggleExpandState) return;
+    //   collection.isExpanded = false;
+    // });
+  }
+
+  // if (
+  //   nodeCollection.canToggleExpandState &&
+  //   nodeCollection.isHovering &&
+  //   pointerState.hasClicked
+  // ) {
+  //   nodeCollection.isExpanded = !nodeCollection.isExpanded;
+  //   // collapse other node collection
+  //   // close all children
+  //   if (!nodeCollection.isExpanded) {
+  //     updateChildrenNodeCollections(nodeCollection, (collection) => {
+  //       if (!collection.canToggleExpandState) return;
+  //       collection.isExpanded = false;
+  //     });
+  //   }
+  //   // close unrelated collections
+  //   if (nodeCollection.isExpanded) {
+  //     updateOtherNodeCollections(nodeCollection, (collection) => {
+  //       if (!collection.canToggleExpandState) return;
+  //       collection.isExpanded = false;
+  //     });
+  //   }
+  // }
 }
 
 function updateOtherNodeCollections(
@@ -305,10 +329,7 @@ export function renderNodeCollection(
   });
 
   // render the node here
-  context.fillStyle = nodeCollection.isHovering
-    ? "#CCC"
-    : `rgba(233,233,233,${nodeCollection.opacity})`;
-  context.strokeStyle = nodeCollection.color;
+
   context.beginPath();
   context.arc(
     nodeCollection.x,
@@ -317,6 +338,12 @@ export function renderNodeCollection(
     0,
     2 * Math.PI
   );
+  context.fillStyle = "#FFF";
+  context.fill();
+  context.fillStyle = nodeCollection.isHovering
+    ? "#CCC"
+    : `rgba(233,233,233,${nodeCollection.opacity})`;
+  context.strokeStyle = nodeCollection.color;
   context.fill();
   context.stroke();
   context.closePath();

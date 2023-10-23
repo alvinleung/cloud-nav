@@ -65,7 +65,7 @@ async function init({ canvas, context }: CanvasRenderer) {
         centerOffsetX: pos.x,
         centerOffsetY: pos.y,
         radius: 40,
-        isExpanded: false,
+        isExpanded: false, 
         canToggleExpandState: true,
         showChildrenLink: true,
       });
