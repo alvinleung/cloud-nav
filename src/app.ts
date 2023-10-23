@@ -53,11 +53,13 @@ async function init({ canvas, context }: CanvasRenderer) {
     });
 
     for (let j = 0; j < 3; j++) {
-      const secondLevelAngle = (j / 3) * 120;
+      const angleRange = 120;
+      const secondLevelAngle = (j / 3) * angleRange;
+      const angleOffset = -angleRange / 3;
 
       const pos = getPositionFromAngleRadius(
         160,
-        baseLevelAngle + secondLevelAngle
+        baseLevelAngle + secondLevelAngle + angleOffset
       );
       const thirdLevelCollection = secondLevelCollection.createNodeCollection({
         centerOffsetX: pos.x,
@@ -71,10 +73,11 @@ async function init({ canvas, context }: CanvasRenderer) {
       for (let j = 0; j < 3; j++) {
         const angleRange = 120;
         const angle2 = (j / 3) * angleRange;
+        const angleOffset2 = angleOffset - angleRange / 3;
 
         const pos = getPositionFromAngleRadius(
           80,
-          baseLevelAngle + secondLevelAngle + angle2 - angleRange / 4
+          baseLevelAngle + secondLevelAngle + angle2 + angleOffset2
         );
         const thirdLevelCollection2 = thirdLevelCollection.createNodeCollection(
           {
@@ -86,10 +89,16 @@ async function init({ canvas, context }: CanvasRenderer) {
           }
         );
 
-        for (let k = 0; k < 10; k++) {
-          const angle = (k / 10) * 100;
+        for (let k = 0; k < 8; k++) {
+          const angleRange = 100;
+          const angle = (k / 8) * angleRange;
+          const angleOffset3 = angleOffset - angleRange / 8;
           const dist = generateRandomFromRange(50, 200);
-          const pos = getPositionFromAngleRadius(dist, baseLevelAngle + angle);
+          const angleVariations = generateRandomFromRange(0, 0);
+          const pos = getPositionFromAngleRadius(
+            dist,
+            baseLevelAngle + angle + angleVariations + angleOffset3
+          );
           thirdLevelCollection2.createNode({
             centerOffsetX: pos.x,
             centerOffsetY: pos.y,
