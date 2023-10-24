@@ -72,7 +72,7 @@ export function updatePointerState(pointerState: PointerState) {
   updatePressedStates(pointerState);
   // update hoverstate
   if (pointerState.hoveringCollection !== null) {
-    pointerState.changeCursor("pointer");
+    pointerState.changeCursor("grab");
   } else {
     pointerState.changeCursor("default");
   }

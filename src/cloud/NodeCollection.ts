@@ -137,30 +137,31 @@ function updateNodeCollectionExpandState(
   pointerState: PointerState
 ) {
   // handle toggling of expand state
-
   if (
     nodeCollection.canToggleExpandState &&
     nodeCollection.isHovering &&
     !nodeCollection.isExpanded
   ) {
-    nodeCollection.isExpanded = true;
+    updateAllParentCollections(nodeCollection, (collection) => {
+      collection.isExpanded = true;
+    });
     updateOtherNodeCollections(nodeCollection, (collection) => {
       if (!collection.canToggleExpandState) return;
       collection.isExpanded = false;
     });
   }
 
-  if (
-    nodeCollection.canToggleExpandState &&
-    !nodeCollection.isHovering &&
-    nodeCollection.isExpanded
-  ) {
-    // nodeCollection.isExpanded = false;
-    // updateChildrenNodeCollections(nodeCollection, (collection) => {
-    //   if (!collection.canToggleExpandState) return;
-    //   collection.isExpanded = false;
-    // });
-  }
+  // if (
+  //   nodeCollection.canToggleExpandState &&
+  //   !nodeCollection.isHovering &&
+  //   nodeCollection.isExpanded
+  // ) {
+  //   nodeCollection.isExpanded = false;
+  //   updateChildrenNodeCollections(nodeCollection, (collection) => {
+  //     if (!collection.canToggleExpandState) return;
+  //     collection.isExpanded = false;
+  //   });
+  // }
 
   // if (
   //   nodeCollection.canToggleExpandState &&
@@ -186,9 +187,19 @@ function updateNodeCollectionExpandState(
   // }
 }
 
-function updateOtherNodeCollections(
+function updateAllParentCollections(
   self: NodeCollection,
   callback: (collection: NodeCollection) => void
+) {
+  callback(self);
+  if (!self.parentCollection) return;
+  updateAllParentCollections(self.parentCollection, callback);
+}
+
+function updateOtherNodeCollections(
+  self: NodeCollection,
+  callback: (collection: NodeCollection) => void,
+  notIncludeOwnChildren: boolean = false
 ) {
   const traverseUpwardAndCollapseOtherBranches = (
     self: NodeCollection,
@@ -196,6 +207,7 @@ function updateOtherNodeCollections(
   ) => {
     if (!self.nodes) return;
     self.nodes.forEach((node) => {
+      if (notIncludeOwnChildren && prevNode === undefined) return;
       if (node === prevNode) return;
       updateChildrenNodeCollections(node as NodeCollection, callback);
     });
@@ -268,9 +280,13 @@ function updateNodeCollectionHoverState(
 
 function onEnterHover(nodeCollection: NodeCollection) {
   nodeCollection.targetScale = nodeCollection.initialScale * 1.1;
-  updateOtherNodeCollections(nodeCollection, (collection) => {
-    collection.targetOpacity = 0.2;
-  });
+  updateOtherNodeCollections(
+    nodeCollection,
+    (collection) => {
+      collection.targetOpacity = 0.3;
+    },
+    true
+  );
 }
 function onExitHover(nodeCollection: NodeCollection) {
   nodeCollection.targetScale = nodeCollection.initialScale;
@@ -340,6 +356,11 @@ export function renderNodeCollection(
     0,
     2 * Math.PI
   );
+
+  const isParentExpanded =
+    !nodeCollection.parentCollection ||
+    nodeCollection.parentCollection?.isExpanded;
+  context.globalAlpha = isParentExpanded ? 1 : 0.8;
   context.fillStyle = "#FFF";
   context.fill();
   context.fillStyle = nodeCollection.isHovering
@@ -347,6 +368,7 @@ export function renderNodeCollection(
     : `rgba(233,233,233,${nodeCollection.opacity})`;
   context.strokeStyle = nodeCollection.color;
   context.fill();
-  context.stroke();
+  // context.stroke();
   context.closePath();
+  context.globalAlpha = 1;
 }

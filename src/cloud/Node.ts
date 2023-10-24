@@ -51,14 +51,26 @@ export function updateNode(node: Node) {
     return;
   }
 
-  const targetX = !parent.isExpanded ? parent.x : parent.x + node.centerOffsetX;
-  const targetY = !parent.isExpanded ? parent.y : parent.y + node.centerOffsetY;
+  const dist =
+    (node.centerOffsetX * node.centerOffsetX +
+      node.centerOffsetY * node.centerOffsetY) /
+    1700;
+  const offset = projectOffset(node.centerOffsetX, node.centerOffsetY, -dist);
+
+  const targetX = !parent.isExpanded
+    ? parent.x + node.centerOffsetX + offset.x
+    : parent.x + node.centerOffsetX;
+  const targetY = !parent.isExpanded
+    ? parent.y + node.centerOffsetY + offset.y
+    : parent.y + node.centerOffsetY;
+  // const targetX = parent.x + node.centerOffsetX;
+  // const targetY = parent.y + node.centerOffsetY;
 
   node.x = followTarget(node.x, targetX, node.responsiveness);
   node.y = followTarget(node.y, targetY, node.responsiveness);
   node.scale = followTarget(
     node.scale,
-    parent.isExpanded ? node.targetScale : 0,
+    parent.isExpanded ? node.targetScale : 0.5,
     node.responsiveness
   );
   node.opacity = followTarget(
@@ -67,6 +79,15 @@ export function updateNode(node: Node) {
     node.responsiveness
   );
 }
+
+function projectOffset(dx: number, dy: number, amount: number) {
+  const angle = Math.atan2(dy, dx);
+  return {
+    x: Math.cos(angle) * amount,
+    y: Math.sin(angle) * amount,
+  };
+}
+
 export function renderNode(node: Node, { context }: CanvasRenderer) {
   // render the node here
   context.globalAlpha = node.opacity;

@@ -55,8 +55,8 @@ async function init({ canvas, context }: CanvasRenderer) {
       centerOffsetY: pos.y,
       radius: 60,
       showChildrenLink: true,
-      isExpanded: true,
-      canToggleExpandState: false,
+      isExpanded: false,
+      // canToggleExpandState: false,
     });
 
     for (let j = 0; j < 3; j++) {
@@ -73,8 +73,8 @@ async function init({ canvas, context }: CanvasRenderer) {
         centerOffsetX: pos.x,
         centerOffsetY: pos.y,
         radius: 30,
-        isExpanded: true,
-        canToggleExpandState: false,
+        isExpanded: false,
+        canToggleExpandState: true,
         showChildrenLink: true,
       });
 
@@ -97,29 +97,29 @@ async function init({ canvas, context }: CanvasRenderer) {
           {
             centerOffsetX: pos.x,
             centerOffsetY: pos.y,
-            radius: 10,
-            isExpanded: true,
-            canToggleExpandState: false,
+            radius: 15,
+            isExpanded: false,
+            canToggleExpandState: true,
           }
         );
 
-        for (let k = 0; k < 8; k++) {
-          const angleRange = 100;
-          const angle = (k / 8) * angleRange;
-          const angleOffset3 = angleOffset - angleRange / 8;
-          const dist = generateRandomFromRange(50, 200);
-          const angleVariations = generateRandomFromRange(0, 0);
-          const pos = getPositionFromAngleRadius(
-            dist,
-            baseLevelAngle + angle + angleVariations + angleOffset3
-          );
-          thirdLevelCollection2.createNode({
-            centerOffsetX: pos.x,
-            centerOffsetY: pos.y,
-            initialScale: generateRandomFromRange(0.2, 0.5),
-            color: "rgba(0,0,0,.1)",
-          });
-        }
+        // for (let k = 0; k < 8; k++) {
+        //   const angleRange = 100;
+        //   const angle = (k / 8) * angleRange;
+        //   const angleOffset3 = angleOffset - angleRange / 8;
+        //   const dist = generateRandomFromRange(50, 200);
+        //   const angleVariations = generateRandomFromRange(0, 0);
+        //   const pos = getPositionFromAngleRadius(
+        //     dist,
+        //     baseLevelAngle + angle + angleVariations + angleOffset3
+        //   );
+        //   thirdLevelCollection2.createNode({
+        //     centerOffsetX: pos.x,
+        //     centerOffsetY: pos.y,
+        //     initialScale: generateRandomFromRange(0.2, 0.5),
+        //     color: "rgba(0,0,0,.1)",
+        //   });
+        // }
       }
     }
   }
