@@ -1,5 +1,9 @@
 import data from "../../assets/mainData.json";
+import { loadAllImages, loadImage } from "../rendering/imageLoaderCanvas";
 import { NodeCollection, createNodeCollection } from "./NodeCollection";
+
+//@ts-ignore
+// import images from "../../static/images/**";
 
 export interface NodeInfo {
   id: string;
@@ -7,6 +11,12 @@ export interface NodeInfo {
   desc: string;
   children: NodeInfo[];
   parent: NodeInfo | null;
+}
+
+export async function getAllImagesFromData() {
+  const imgUrls = data.nodes.map((node) => node.img);
+  const allImages = await loadAllImages(imgUrls);
+  return allImages;
 }
 
 export function buildTreeFromData() {

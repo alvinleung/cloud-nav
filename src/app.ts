@@ -1,11 +1,8 @@
-import { Node, createNode, renderNode, updateNode } from "./cloud/Node";
 import { createPointerStateProvider, updatePointerState } from "./pointer";
 import {
   CanvasRenderer,
   createCanvasRenderer,
 } from "./rendering/CanvasRenderer";
-import { createFullScreenCanvas } from "./rendering/createFullScreenCanvas";
-import { MovablePoint, createMovablePoint, createPoint } from "./cloud/Point";
 import { createViewportAnchor, updateViewportAnchor } from "./ViewportAnchor";
 import {
   NodeCollection,
@@ -13,14 +10,12 @@ import {
   renderNodeCollection,
   updateNodeCollection,
 } from "./cloud/NodeCollection";
-import {
-  generateRandomFromRange,
-  getPositionFromAngleRadius,
-} from "./utils/utils";
+import { getPositionFromAngleRadius } from "./utils/utils";
 import {
   NodeInfo,
   buildTreeFromData,
   createAllNodesFromTree,
+  getAllImagesFromData,
 } from "./cloud/NodeInfoTree";
 
 window.onload = () =>
@@ -50,6 +45,8 @@ async function init({ canvas, context }: CanvasRenderer) {
   viewportAnchor.x = canvas.width / 2;
   viewportAnchor.y = canvas.height / 2;
 
+  const allImages = await getAllImagesFromData();
+
   nodeCollection = createAllNodesFromTree(
     tree,
     (nodeInfo, parentNode, level, index) => {
@@ -61,6 +58,7 @@ async function init({ canvas, context }: CanvasRenderer) {
           showChildrenLink: true,
           isExpanded: true,
           canToggleExpandState: false,
+          image: allImages[nodeInfo.img],
         });
 
       const siblingCount = nodeInfo.parent?.children.length || 0;
@@ -80,6 +78,7 @@ async function init({ canvas, context }: CanvasRenderer) {
           isExpanded: false,
           canToggleExpandState: true,
           showChildrenLink: true,
+          image: allImages[nodeInfo.img],
         });
       }
 
@@ -87,15 +86,16 @@ async function init({ canvas, context }: CanvasRenderer) {
       const limitedAngle = 270 * levelFactor;
       const angle =
         (limitedAngle * index) / siblingCount - limitedAngle / 2 - parentAngle;
-      const dist = (50 * index) / siblingCount + 100;
+      const dist = (100 * index) / siblingCount + 100;
       const pos = getPositionFromAngleRadius(dist, angle);
       return parentNode.createNodeCollection({
         centerOffsetX: pos.x,
         centerOffsetY: pos.y,
-        radius: 10,
+        radius: 40 * (1 - levelFactor),
         isExpanded: false,
         canToggleExpandState: true,
         showChildrenLink: true,
+        image: allImages[nodeInfo.img],
       });
     }
   )[0];

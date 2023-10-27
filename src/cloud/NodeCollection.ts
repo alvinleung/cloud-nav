@@ -70,6 +70,8 @@ export function createNodeCollection(
     targetScale: config.targetScale || config.initialScale || 1,
     opacity: 1,
     targetOpacity: 1,
+    image: config.image,
+    label: config.label,
   };
   return collection;
 }
@@ -347,7 +349,6 @@ export function renderNodeCollection(
   });
 
   // render the node here
-
   context.beginPath();
   context.arc(
     nodeCollection.x,
@@ -371,4 +372,14 @@ export function renderNodeCollection(
   // context.stroke();
   context.closePath();
   context.globalAlpha = 1;
+
+  if (nodeCollection.image) {
+    context.drawImage(
+      nodeCollection.image,
+      nodeCollection.x - nodeCollection.radius,
+      nodeCollection.y - nodeCollection.radius,
+      nodeCollection.radius * 2,
+      nodeCollection.radius * 2
+    );
+  }
 }

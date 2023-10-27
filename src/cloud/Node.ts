@@ -20,6 +20,8 @@ export interface Node {
   responsiveness: number;
   opacity: number;
   targetOpacity: number;
+  image?: HTMLImageElement;
+  label?: string;
 }
 
 export function createNode(
@@ -40,6 +42,8 @@ export function createNode(
     responsiveness: generateRandomFromRange(0.1, 0.02),
     opacity: 1,
     targetOpacity: 1,
+    image: config.image,
+    label: config.label,
   };
   return node;
 }

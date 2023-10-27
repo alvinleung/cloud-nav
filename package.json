@@ -6,9 +6,12 @@
   "author": "Alvin Leung <alvinleung2009@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "parcel": "^2.10.0"
+    "parcel": "^2.10.1"
   },
   "scripts": {
-    "start": "rm -rf dist .parcel-cache && parcel src/index.html"
-  }
+    "copy-img": "cp -vR ./assets/images ./dist",
+    "start": "rm -rf dist .parcel-cache && npm run copy-img && parcel src/index.html",
+    "build": "rm -rf dist .parcel-cache && npm run copy-img && parcel build src/index.html"
+  },
+  "devDependencies": {}
 }
