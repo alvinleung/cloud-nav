@@ -19,12 +19,21 @@ import {
   getAllImagesFromData,
 } from "./cloud/NodeInfoTree";
 
-window.onload = () =>
+//@ts-ignore
+window.setupSuperpowerGraph = (element: HTMLElement) => {
   createCanvasRenderer({
-    elm: document.body,
+    elm: element,
     init,
     update,
   });
+};
+window.addEventListener("load", () => {
+  const host = window.location.host;
+  if (host.indexOf("localhost") !== -1 || host.indexOf("netlify.app") !== -1) {
+    //@ts-ignore
+    window.setupSuperpowerGraph(document.body);
+  }
+});
 
 const mouse = createPointerStateProvider();
 const tree = buildTreeFromData();
