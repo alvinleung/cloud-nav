@@ -8,6 +8,7 @@ import { createFullScreenCanvas } from "./rendering/createFullScreenCanvas";
 import { MovablePoint, createMovablePoint, createPoint } from "./cloud/Point";
 import { createViewportAnchor, updateViewportAnchor } from "./ViewportAnchor";
 import {
+  NodeCollection,
   createNodeCollection,
   renderNodeCollection,
   updateNodeCollection,
@@ -16,6 +17,11 @@ import {
   generateRandomFromRange,
   getPositionFromAngleRadius,
 } from "./utils/utils";
+import {
+  NodeInfo,
+  buildTreeFromData,
+  createAllNodesFromTree,
+} from "./cloud/NodeInfoTree";
 
 window.onload = () =>
   createCanvasRenderer({
@@ -25,22 +31,76 @@ window.onload = () =>
   });
 
 const mouse = createPointerStateProvider();
-const nodeCollection = createNodeCollection({
-  radius: 100,
-  showChildrenLink: true,
-  isExpanded: true,
-  canToggleExpandState: false,
-});
+const tree = buildTreeFromData();
+// const nodeCollection = createNodeCollection({
+//   radius: 100,
+//   showChildrenLink: true,
+//   isExpanded: true,
+//   canToggleExpandState: false,
+// });
+
+function getDegree(rad: number) {
+  return (rad * 180) / Math.PI;
+}
+let nodeCollection: NodeCollection;
+
 const viewportAnchor = createViewportAnchor();
 
 async function init({ canvas, context }: CanvasRenderer) {
-  // populate the nodes
-  nodeCollection.x = canvas.width / 2;
-  nodeCollection.y = canvas.height / 2;
-
   viewportAnchor.x = canvas.width / 2;
   viewportAnchor.y = canvas.height / 2;
 
+  nodeCollection = createAllNodesFromTree(
+    tree,
+    (nodeInfo, parentNode, level, index) => {
+      if (!parentNode)
+        return createNodeCollection({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          radius: 100,
+          showChildrenLink: true,
+          isExpanded: true,
+          canToggleExpandState: false,
+        });
+
+      const siblingCount = nodeInfo.parent?.children.length || 0;
+      const parentAngle =
+        getDegree(
+          Math.atan2(parentNode.centerOffsetY, parentNode.centerOffsetX)
+        ) - 90;
+
+      if (level === 1) {
+        const angle = (360 * index) / siblingCount - parentAngle;
+        const dist = 200;
+        const pos = getPositionFromAngleRadius(dist, angle);
+        return parentNode.createNodeCollection({
+          centerOffsetX: pos.x,
+          centerOffsetY: pos.y,
+          radius: 50,
+          isExpanded: false,
+          canToggleExpandState: true,
+          showChildrenLink: true,
+        });
+      }
+
+      const levelFactor = level / 5;
+      const limitedAngle = 270 * levelFactor;
+      const angle =
+        (limitedAngle * index) / siblingCount - limitedAngle / 2 - parentAngle;
+      const dist = (50 * index) / siblingCount + 100;
+      const pos = getPositionFromAngleRadius(dist, angle);
+      return parentNode.createNodeCollection({
+        centerOffsetX: pos.x,
+        centerOffsetY: pos.y,
+        radius: 10,
+        isExpanded: false,
+        canToggleExpandState: true,
+        showChildrenLink: true,
+      });
+    }
+  )[0];
+
+  /*
   const bigCircleCount = 5;
   for (let i = 0; i < bigCircleCount; i++) {
     const baseLevelAngle = (i / bigCircleCount) * 360;
@@ -122,7 +182,7 @@ async function init({ canvas, context }: CanvasRenderer) {
         // }
       }
     }
-  }
+  }*/
 }
 
 function update(canvasRenderer: CanvasRenderer) {

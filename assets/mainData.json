@@ -1,0 +1,1199 @@
+{
+  "nodes": [
+    {
+      "id": "Superpower",
+      "group": 1,
+      "desc": "",
+      "value": 120,
+      "img": "superpower.png",
+      "imageBool": true,
+      "color": "grey",
+      "neighbors": []
+    },
+    {
+      "id": "Physical Health",
+      "group": 1,
+      "desc": "The state of well-being where all body systems and organs function optimally, free from disease, and are properly conditioned through regular exercise, movement, and maintenance. Superpower defines Physical Health as your physical fitness, your Physiological Health, Genetics, and Disease Risk.",
+      "value": 75,
+      "img": "physical-health.png",
+      "imageBool": true,
+      "color": "grey",
+      "neighbors": []
+    },
+    {
+      "id": "Mental Health",
+      "group": 2,
+      "desc": "The balance of psychological, emotional, and social well-being, critical for personal resilience, coping mechanisms, and overall cognitive function.",
+      "value": 75,
+      "img": "mental-health.png",
+      "imageBool": true,
+      "color": "grey",
+      "neighbors": []
+    },
+    {
+      "id": "Environment",
+      "group": 2,
+      "desc": "The external factors affecting your health, including the physical, social, and chemical aspects of your surroundings. Common environmental exposures that may influence your health include air quality, water quality, chemicals, fungi, toxins, pollutants, and electromagnetic fields.",
+      "value": 75,
+      "img": "environment.png",
+      "imageBool": true,
+      "color": "grey",
+      "neighbors": []
+    },
+    {
+      "id": "Sleep",
+      "group": 2,
+      "desc": "The restorative state of body and mind that contributes to overall health by allowing for the healing and rejuvenation of various body functions.",
+      "value": 75,
+      "img": "sleep.png",
+      "imageBool": true,
+      "color": "grey",
+      "neighbors": []
+    },
+    {
+      "id": "Nutrition",
+      "group": 2,
+      "desc": "The provision of essential nutrients to the body through balanced diet and lifestyle, fundamental for the body's growth, repair, and maintenance.",
+      "value": 75,
+      "img": "nutrition.png",
+      "imageBool": true,
+      "color": "grey",
+      "neighbors": []
+    },
+    {
+      "id": "Physical Fitness",
+      "group": 2,
+      "desc": "Your ability to perform daily physically demanding activities effectively.",
+      "value": 25,
+      "img": "physical-fitness.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Physiological Health",
+      "group": 2,
+      "desc": "Physiological health refers to the optimal functioning of your bodily systems and processes, such as your organs, nervous system, immune response, and hormonal balance.",
+      "value": 25,
+      "img": "physiological-health.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Genetics",
+      "group": 2,
+      "desc": "Your germline genetic screening and family history evaluation for susceptibility to diseases or phenotypical dysfunctions.",
+      "value": 25,
+      "img": "genetics.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Disease Risk",
+      "group": 2,
+      "desc": "The predisposition or vulnerability for you to develop physiological disorders.",
+      "value": 25,
+      "img": "disease-risk.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Emotional Well-being",
+      "group": 2,
+      "desc": "Emotional well-being relates to your ability to effectively manage and express your emotions in a healthy manner. It encompasses feelings of happiness, sadness, anxiety, as well as the capacity to cope with life's challenges in a constructive way.",
+      "value": 25,
+      "img": "emotional-well-being.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Cognitive Function",
+      "group": 2,
+      "desc": "Mental capabilities that are required for the processing of information, decision-making, problem-solving, learning, and memory. Optimal cognitive function ensures that you can think clearly, remember information, and engage in logical reasoning.",
+      "value": 25,
+      "img": "cognitive-function.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Stress Management",
+      "group": 2,
+      "desc": "Stress Management refers to your strategies, coping mechanisms, and techniques to handle or mitigate stress in life.",
+      "value": 25,
+      "img": "stress-management.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Spirituality and Purpose",
+      "group": 2,
+      "desc": "A sense of meaning and purpose in life, whether through personal beliefs, values, or a broader sense of connection to the universe or a higher power.",
+      "value": 25,
+      "img": "spirituality-and-purpose.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Community, Relationships, and Social Satisfaction",
+      "group": 2,
+      "desc": "The quality and depth of your social connections – including friendships, family and romantic ties, as well as community involvement.",
+      "value": 25,
+      "img": "community-relationships-and-social-satisfaction.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "subconscious work and understanding your 'inner child'",
+      "group": 2,
+      "desc": "Inner work is the intentional and conscientious practice of unraveling and examining your motives, fixations, and subconscious programming.",
+      "value": 25,
+      "img": "subconscious-work-and-understanding-your-inner-child.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Physical Environment",
+      "group": 2,
+      "desc": "The physical environment refers to the tangible external factors and conditions that surround you, which can influence your physiological and biochemical health processes. This includes elements like air quality, water quality, exposure to toxins or pollutants, access to clean foods, radiation levels, and other external factors that can either support or hinder optimal health. A well-balanced physical environment promotes health by minimizing exposures to harmful elements and maximizing beneficial ones.",
+      "value": 25,
+      "img": "physical-environment.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Social Environment",
+      "group": 2,
+      "desc": "The social environment encompasses the intricate web of relationships, social structures, cultural norms, and interactions that you are embedded in. This includes family dynamics, friendships, work relationships, community ties, and broader societal factors. A supportive social environment can foster emotional well-being, reduce stress, and provide networks for sharing health-promoting resources and information. On the flip side, negative or toxic social environments can lead to increased stress, feelings of isolation, and negative health outcomes.",
+      "value": 25,
+      "img": "social-environment.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Diet",
+      "group": 2,
+      "desc": "The foods, supplements, and liquids you are consuming on a daily basis (measured by calories, macro and micronutrient type, and any associated toxin levels).",
+      "value": 25,
+      "img": "diet.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Macronutrient",
+      "group": 2,
+      "desc": "Macronutrients are the primary nutrients that your body needs in large amounts to function properly. The three primary macronutrients are carbohydrates, proteins, and fats.",
+      "value": 25,
+      "img": "macronutrient.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Micronutrient",
+      "group": 2,
+      "desc": "Micronutrients are essential vitamins, minerals, and antioxidant stores required by your body in small amounts for proper growth, development, and physiological functioning. Though required in minute quantities, their absence or deficiency can lead to significant health problems.",
+      "value": 25,
+      "img": "micronutrient.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Gut Health",
+      "group": 2,
+      "desc": "Gut health refers to the balance and well-being of the microbiota (bacteria and other microorganisms) present in your digestive tracts, as well as the strength, integrity, and inflammation levels of your intestinal walls that separate the digestive tract from your bloodstream and other organs.",
+      "value": 25,
+      "img": "gut-health.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Allergies",
+      "group": 2,
+      "desc": "Allergies are hypersensitive immune responses of your body to substances that either enter or come into contact with it. Common allergens include foods and environmental triggers like pollen.",
+      "value": 25,
+      "img": "allergies.png",
+      "imageBool": true,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Hydration",
+      "group": 2,
+      "desc": "Hydration refers to the process of absorbing water into your body's cells. Proper hydration is crucial for maintaining bodily functions, including cognition, movement, regulating temperature, digesting food, and expelling waste.",
+      "value": 25,
+      "img": "hydration.png",
+      "imageBool": false,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Sleep Quality",
+      "group": 2,
+      "desc": "Sleep quality pertains to how well you sleep and the restfulness of that sleep. It includes factors like how long it takes to fall asleep, the number of awakenings during the night, and the proportion of actual sleep time during the sleep period.",
+      "value": 25,
+      "img": "sleep-quality.png",
+      "imageBool": false,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Sleep Duration",
+      "group": 2,
+      "desc": "Sleep duration refers to the total amount of time that you spend sleeping in a 24-hour period.",
+      "value": 25,
+      "img": "sleep-duration.png",
+      "imageBool": false,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Sleep Disorders",
+      "group": 2,
+      "desc": "Sleep disorders are conditions that disrupt the normal sleep patterns, leading to difficulties in falling asleep, staying asleep, or getting restorative sleep. Examples include insomnia, sleep apnea, restless leg syndrome, and narcolepsy.",
+      "value": 25,
+      "img": "sleep-disorders.png",
+      "imageBool": false,
+      "color": "black",
+      "neighbors": []
+    },
+    {
+      "id": "Metabolism",
+      "group": 2,
+      "desc": "The biochemical process by which your body converts what you eat and drink into energy. Measured by biomarkers like fasting glucose, average blood sugar (HgbA1c), insulin, and advanced cholesterol biomarkers.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "metabolism.png",
+      "neighbors": []
+    },
+    {
+      "id": "Body Composition",
+      "group": -1,
+      "desc": "The relative amounts of muscle, fat, bone, and other vital parts of your body. It is usually expressed as a ratio of lean mass to fat mass.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "body-composition.png",
+      "neighbors": []
+    },
+    {
+      "id": "Flexibility",
+      "group": -1,
+      "desc": "Flexibility is the ability of your joint or series of joints to move through an unrestricted, pain-free range of motion. Balance, on the other hand, is your ability to maintain the body's position over its base of support within stability limits, both statically and dynamically.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "flexibility.png",
+      "neighbors": []
+    },
+    {
+      "id": "Muscular Strength",
+      "group": -1,
+      "desc": "The maximum amount of force that your muscle or group of your muscles can exert against some form of resistance in a single effort.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "muscular-strength.png",
+      "neighbors": []
+    },
+    {
+      "id": "Cardiovascular Endurance",
+      "group": -1,
+      "desc": "The ability of your heart and lungs to supply oxygen-rich blood to the working muscle tissues and the capacity of the muscles to use oxygen to produce energy for movement over sustained periods of time.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "cardiovascular-endurance.png",
+      "neighbors": []
+    },
+    {
+      "id": "Cardiometabolic",
+      "group": -1,
+      "desc": "Cardiometabolic labs are tests that measure the levels of certain substances in your blood that are related to your heart and metabolic health. They are important because they can help you assess your risk of developing cardiovascular disease, diabetes, or other cardiometabolic conditions, and guide you in making lifestyle changes or taking medications to prevent or treat them.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "cardiometabolic.png",
+      "neighbors": []
+    },
+    {
+      "id": "Heart Health (Cardiovascular Risk)",
+      "group": -1,
+      "desc": "Heart Health and Cardiovascular risk is the probability of developing or dying from a heart or blood vessel disease, such as heart attack or stroke, over a certain period of time.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "heart-health-cardiovascular-risk.png",
+      "neighbors": []
+    },
+    {
+      "id": "Liver Health",
+      "group": -1,
+      "desc": "The state of having a liver that performs its essential functions well, such as filtering toxins, producing bile, metabolizing nutrients, and regulating blood clotting.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "liver-health.png",
+      "neighbors": []
+    },
+    {
+      "id": "Kidney Health",
+      "group": -1,
+      "desc": "The state of having kidneys that perform their essential functions well, such as filtering waste, producing hormones, and maintaining fluid and electrolyte balance.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "kidney-health.png",
+      "neighbors": []
+    },
+    {
+      "id": "Immune Health",
+      "group": -1,
+      "desc": "The state of having a well-functioning immune system that can protect the body from infections, diseases, and other harmful agents.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "immune-health.png",
+      "neighbors": []
+    },
+    {
+      "id": "Skeletal and Bone Health",
+      "group": -1,
+      "desc": "The state of having a strong and healthy skeletal system that supports the body, protects the organs, and enables movement.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "skeletal-and-bone-health.png",
+      "neighbors": []
+    },
+    {
+      "id": "Blood and Oxygen",
+      "group": -1,
+      "desc": "Blood and oxygen health are the aspects of the body system that involve the delivery and utilization of oxygen by the cells and tissues.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "blood-and-oxygen.png",
+      "neighbors": []
+    },
+    {
+      "id": "Hormone Health",
+      "group": -1,
+      "desc": "The aspect of the body system that involves the production, regulation, and function of hormones, which are chemical messengers that coordinate different processes in your body.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "hormone-health.png",
+      "neighbors": []
+    },
+    {
+      "id": "Skin, Hair, and Nails Health",
+      "group": -1,
+      "desc": "Skin, hair, and nail health are the aspects of the body system that involve the structure, function, and maintenance of the skin, hair, and nails.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "skin-hair-and-nails-health.png",
+      "neighbors": []
+    },
+    {
+      "id": "Nervous System Health",
+      "group": -1,
+      "desc": "The nervous system is the part of the body that coordinates and controls all the activities of the body, such as sensing, thinking, moving, and feeling.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "nervous-system-health.png",
+      "neighbors": []
+    },
+    {
+      "id": "Oral and Dental Health",
+      "group": -1,
+      "desc": "Oral and dental health are the state of your mouth, teeth, gums, and oral microbiome and are important for your overall health and well-being.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "oral-and-dental-health.png",
+      "neighbors": []
+    },
+    {
+      "id": "Germline Disease Risk",
+      "group": -1,
+      "desc": "Germline disease risk is the likelihood of developing a disease or disorder that is inherited from one or both parents through the genes present in the egg or sperm cells.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "germline-disease-risk.png",
+      "neighbors": []
+    },
+    {
+      "id": "Pharmacogenetics",
+      "group": -1,
+      "desc": "Pharmacogenetics is the study of how genetic variations affect the response and metabolism of drugs in different individuals.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "pharmacogenetics.png",
+      "neighbors": []
+    },
+    {
+      "id": "Nutritional Absorption",
+      "group": -1,
+      "desc": "Nutrition absorption related to your genetics is the influence of your genetic makeup on how well you can absorb and utilize the nutrients from your diet.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "nutritional-absorption.png",
+      "neighbors": []
+    },
+    {
+      "id": "Epigenetic Age Clocks",
+      "group": -1,
+      "desc": "Mathematical models that estimate the biological age of an individual based on the patterns of DNA methylation, which is a chemical modification of the DNA that can affect gene expression.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "epigenetic-age-clocks.png",
+      "neighbors": []
+    },
+    {
+      "id": "Cancer",
+      "group": -1,
+      "desc": "Cancer is a group of diseases that involve the abnormal growth and spread of cells that can damage normal tissues and organs.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "cancer.png",
+      "neighbors": []
+    },
+    {
+      "id": "Depression",
+      "group": -1,
+      "desc": "Depression is a common and can be serious mental health condition that affects the mood, thoughts, and behavior of a person.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "depression.png",
+      "neighbors": []
+    },
+    {
+      "id": "Anxiety",
+      "group": -1,
+      "desc": "Anxiety is a common and complex mental health condition that affects the emotions, thoughts, and behavior of a person.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "anxiety.png",
+      "neighbors": []
+    },
+    {
+      "id": "Happiness and Satisfaction",
+      "group": -1,
+      "desc": "Happiness and satisfaction are the aspects of the mental and emotional well-being that involve the positive feelings and attitudes that a person has towards oneself and one’s life.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "happiness-and-satisfaction.png",
+      "neighbors": []
+    },
+    {
+      "id": "Memory",
+      "group": -1,
+      "desc": "The aspect of the cognitive function that involves the encoding, storage, and retrieval of information in the brain.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "memory.png",
+      "neighbors": []
+    },
+    {
+      "id": "Focus and Attention",
+      "group": -1,
+      "desc": "Aspects of the cognitive function that involve the selection, concentration, and maintenance of awareness on a specific stimulus or task",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "focus-and-attention.png",
+      "neighbors": []
+    },
+    {
+      "id": "Productivity",
+      "group": -1,
+      "desc": "Productivity is the aspect of the personal and professional performance that involves the efficiency, quality, and quantity of the output or outcome of a given task or goal.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "productivity.png",
+      "neighbors": []
+    },
+    {
+      "id": "Air Quality",
+      "group": -1,
+      "desc": "Air quality is the aspect of the environmental health that involves the level of pollutants and contaminants in the air that we breathe.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "air-quality.png",
+      "neighbors": []
+    },
+    {
+      "id": "Water Quality",
+      "group": -1,
+      "desc": "Water quality is the aspect of the environmental health that involves the level of pollutants and contaminants in the water that we drink, use, and interact with.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "water-quality.png",
+      "neighbors": []
+    },
+    {
+      "id": "Allergen Exposure",
+      "group": -1,
+      "desc": "Allergen exposure is the aspect of your environmental health that involves the contact or ingestion of substances that can trigger an allergic reaction in some individuals.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "allergen-exposure.png",
+      "neighbors": []
+    },
+    {
+      "id": "Toxin Exposure",
+      "group": -1,
+      "desc": "Toxin exposure is the aspect of your environmental health that involves the contact or ingestion of substances that can harm the cells, organs, or systems of the body.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "toxin-exposure.png",
+      "neighbors": []
+    },
+    {
+      "id": "Bacterial Exposure",
+      "group": -1,
+      "desc": "Bacterial exposure is the aspect of your environmental health that involves the contact or ingestion of microorganisms that can cause infections or diseases in some individuals.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "bacterial-exposure.png",
+      "neighbors": []
+    },
+    {
+      "id": "Community",
+      "group": -1,
+      "desc": "Community is the aspect of your social environment that involves the sense of belonging, connection, and support that a person has with other people who share common values, interests, or goals.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "community.png",
+      "neighbors": []
+    },
+    {
+      "id": "Friends",
+      "group": -1,
+      "desc": "Friends are the aspect of your social environment that involve the people who you have a close, personal, and positive relationship with.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "friends.png",
+      "neighbors": []
+    },
+    {
+      "id": "Family relationships",
+      "group": -1,
+      "desc": "Family relationships are the aspect of your social environment that involve the people who you are related to by blood, marriage, or adoption. Family relationships can provide you with love, care, guidance, and support. Family relationships can also influence your health, happiness, and behavior.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "family-relationships.png",
+      "neighbors": []
+    },
+    {
+      "id": "Intimate relationships",
+      "group": -1,
+      "desc": "Intimate relationships are the aspect of your social environment  that involve the people who you have a close, personal, and romantic connection with. Intimate relationships can provide you with affection, intimacy, sexual satisfaction, and emotional support. Intimate relationships can also influence your health, happiness, and behavior.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "intimate-relationships.png",
+      "neighbors": []
+    },
+    {
+      "id": "Protein intake",
+      "group": -1,
+      "desc": "The aspect of nutrition that involves the amount and quality of the protein that you consume from your diet, which is an essential macronutrient that provides amino acids, which are the building blocks of the body’s tissues, enzymes, hormones, and antibodies.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "protein-intake.png",
+      "neighbors": []
+    },
+    {
+      "id": "Carbohydrate intake",
+      "group": -1,
+      "desc": "The aspect of nutrition that involves the amount and quality of the carbohydrate that you consume from your diet, which is an essential macronutrient that provides glucose, which is the main source of energy for the brain and muscles.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "carbohydrate-intake.png",
+      "neighbors": []
+    },
+    {
+      "id": "Fat intake",
+      "group": -1,
+      "desc": "The aspect of nutrition that involves the amount and quality of the carbohydrate that you consume from your diet, which is an essential macronutrient that provides fatty acids, which are the building blocks of the cell membranes, hormones, and signaling molecules.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "fat-intake.png",
+      "neighbors": []
+    },
+    {
+      "id": "Vitamins",
+      "group": -1,
+      "desc": "Vitamins are organic compounds that are essential for various biochemical processes in the body, but cannot be synthesized by the body itself and must be obtained from dietary sources or supplements.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "vitamins.png",
+      "neighbors": []
+    },
+    {
+      "id": "Minerals",
+      "group": -1,
+      "desc": "Minerals are inorganic elements that are involved in various structural and functional roles in the body, such as building bones and teeth, regulating fluid balance and enzyme activity, and transmitting nerve impulses.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "minerals.png",
+      "neighbors": []
+    },
+    {
+      "id": "Omegas",
+      "group": -1,
+      "desc": "A group of essential fatty acids that have various health benefits for the body, such as reducing inflammation, improving brain function, and lowering the risk of cardiovascular disease.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "omegas.png",
+      "neighbors": []
+    },
+    {
+      "id": "Antioxidants",
+      "group": -1,
+      "desc": "Substances that protect your cells from the harmful effects of free radicals, which are unstable molecules that can cause damage to your DNA and other important molecules. Antioxidants can be found in many foods, especially fruits and vegetables, or taken as supplements.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "antioxidants.png",
+      "neighbors": []
+    },
+    {
+      "id": "Organic Acids",
+      "group": -1,
+      "desc": "Organic acids are products of your body's metabolism that can be measured in your urine to assess your functional health, such as your nutrient status, inflammation level, gut function, and mitochondrial function.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "organic-acids.png",
+      "neighbors": []
+    },
+    {
+      "id": "Microbiome Diversity",
+      "group": -1,
+      "desc": "Microbiome diversity is the measure of how many different types of microbes live in a certain environment, such as the human gut, skin, or mouth and can influence many aspects of your physiology, immunity, metabolism, and behavior.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "microbiome-diversity.png",
+      "neighbors": []
+    },
+    {
+      "id": "Intestinal Wall Permeability",
+      "group": -1,
+      "desc": "The ability of substances to pass through the lining of the small and large intestines into the bloodstream.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "intestinal-wall-permeability.png",
+      "neighbors": []
+    },
+    {
+      "id": "Intestinal Inflammation",
+      "group": -1,
+      "desc": "Intestinal inflammation is a condition where the lining of the small or large intestine becomes irritated, swollen, and damaged due to various factors, such as infections, autoimmune diseases, or medications.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "intestinal-inflammation.png",
+      "neighbors": []
+    },
+    {
+      "id": "Antibody testing",
+      "group": -1,
+      "desc": "Antibody testing is a way of measuring how your immune system reacts to certain substances, called allergens, that may cause symptoms such as itching, rashes, and GI symptoms with certain foods.",
+      "value": 6,
+      "imageBool": false,
+      "color": "grey",
+      "img": "antibody-testing.png"
+    }
+  ],
+  "links": [
+    {
+      "source": "Superpower",
+      "target": "Physical Health",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Superpower",
+      "target": "Mental Health",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Superpower",
+      "target": "Environment",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Superpower",
+      "target": "Sleep",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Superpower",
+      "target": "Nutrition",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Health",
+      "target": "Physical Fitness",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Health",
+      "target": "Physiological Health",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Health",
+      "target": "Genetics",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Health",
+      "target": "Disease Risk",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Mental Health",
+      "target": "Emotional Well-being",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Mental Health",
+      "target": "Cognitive Function",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Mental Health",
+      "target": "Stress Management",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Mental Health",
+      "target": "Spirituality and Purpose",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Mental Health",
+      "target": "Community, Relationships, and Social Satisfaction",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Mental Health",
+      "target": "subconscious work and understanding your 'inner child'",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Environment",
+      "target": "Physical Environment",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Environment",
+      "target": "Social Environment",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Nutrition",
+      "target": "Diet",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Nutrition",
+      "target": "Macronutrient",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Nutrition",
+      "target": "Micronutrient",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Nutrition",
+      "target": "Gut Health",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Nutrition",
+      "target": "Allergies",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Nutrition",
+      "target": "Hydration",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Sleep",
+      "target": "Sleep Quality",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Sleep",
+      "target": "Sleep Duration",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Sleep",
+      "target": "Sleep Disorders",
+      "value": 2,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Fitness",
+      "target": "Metabolism",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Fitness",
+      "target": "Body Composition",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Fitness",
+      "target": "Flexibility",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Fitness",
+      "target": "Muscular Strength",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Fitness",
+      "target": "Cardiovascular Endurance",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physiological Health",
+      "target": "Heart Health (Cardiovascular Risk)",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physiological Health",
+      "target": "Liver Health",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physiological Health",
+      "target": "Kidney Health",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physiological Health",
+      "target": "Immune Health",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physiological Health",
+      "target": "Skeletal and Bone Health",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physiological Health",
+      "target": "Blood and Oxygen",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physiological Health",
+      "target": "Hormone Health",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physiological Health",
+      "target": "Skin, Hair, and Nails Health",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physiological Health",
+      "target": "Nervous System Health",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physiological Health",
+      "target": "Oral and Dental Health",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Genetics",
+      "target": "Cardiometabolic",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Genetics",
+      "target": "Germline Disease Risk",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Genetics",
+      "target": "Pharmacogenetics",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Genetics",
+      "target": "Nutritional Absorption",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Genetics",
+      "target": "Epigenetic Age Clocks",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Disease Risk",
+      "target": "Cancer",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Emotional Well-being",
+      "target": "Depression",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Emotional Well-being",
+      "target": "Anxiety",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Emotional Well-being",
+      "target": "Happiness and Satisfaction",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Cognitive Function",
+      "target": "Memory",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Cognitive Function",
+      "target": "Focus and Attention",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Cognitive Function",
+      "target": "Productivity",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Environment",
+      "target": "Air Quality",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Environment",
+      "target": "Water Quality",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Environment",
+      "target": "Allergen Exposure",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Environment",
+      "target": "Toxin Exposure",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Physical Environment",
+      "target": "Bacterial Exposure",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Social Environment",
+      "target": "Community",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Social Environment",
+      "target": "Friends",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Social Environment",
+      "target": "Family relationships",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Social Environment",
+      "target": "Intimate relationships",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Macronutrient",
+      "target": "Protein intake",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Macronutrient",
+      "target": "Carbohydrate intake",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Macronutrient",
+      "target": "Fat intake",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Micronutrient",
+      "target": "Vitamins",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Micronutrient",
+      "target": "Minerals",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Micronutrient",
+      "target": "Omegas",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Micronutrient",
+      "target": "Antioxidants",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Micronutrient",
+      "target": "Organic Acids",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Gut Health",
+      "target": "Microbiome Diversity",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Gut Health",
+      "target": "Intestinal Wall Permeability",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Gut Health",
+      "target": "Intestinal Inflammation",
+      "value": 3,
+      "curvature": 0.25
+    },
+    {
+      "source": "Allergies",
+      "target": "Antibody testing",
+      "value": 3,
+      "curvature": 0.25
+    }
+  ]
+}

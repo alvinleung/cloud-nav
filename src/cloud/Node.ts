@@ -80,7 +80,7 @@ export function updateNode(node: Node) {
   );
 }
 
-function projectOffset(dx: number, dy: number, amount: number) {
+export function projectOffset(dx: number, dy: number, amount: number) {
   const angle = Math.atan2(dy, dx);
   return {
     x: Math.cos(angle) * amount,

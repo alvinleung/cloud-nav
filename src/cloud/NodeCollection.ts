@@ -364,8 +364,8 @@ export function renderNodeCollection(
   context.fillStyle = "#FFF";
   context.fill();
   context.fillStyle = nodeCollection.isHovering
-    ? "#CCC"
-    : `rgba(233,233,233,${nodeCollection.opacity})`;
+    ? "#999"
+    : `rgba(180,180,180,${nodeCollection.opacity})`;
   context.strokeStyle = nodeCollection.color;
   context.fill();
   // context.stroke();
