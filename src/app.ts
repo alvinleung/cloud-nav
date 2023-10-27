@@ -8,6 +8,7 @@ import {
   NodeCollection,
   createNodeCollection,
   renderNodeCollection,
+  renderNodeText,
   updateNodeCollection,
 } from "./cloud/NodeCollection";
 import { getPositionFromAngleRadius } from "./utils/utils";
@@ -79,6 +80,7 @@ async function init({ canvas, context }: CanvasRenderer) {
           canToggleExpandState: true,
           showChildrenLink: true,
           image: allImages[nodeInfo.img],
+          label: nodeInfo.id,
         });
       }
 
@@ -96,93 +98,10 @@ async function init({ canvas, context }: CanvasRenderer) {
         canToggleExpandState: true,
         showChildrenLink: true,
         image: allImages[nodeInfo.img],
+        label: nodeInfo.id,
       });
     }
   )[0];
-
-  /*
-  const bigCircleCount = 5;
-  for (let i = 0; i < bigCircleCount; i++) {
-    const baseLevelAngle = (i / bigCircleCount) * 360;
-    const angleVariations = generateRandomFromRange(0, 40);
-    const distVariations = generateRandomFromRange(-60, 60);
-    const pos = getPositionFromAngleRadius(
-      225 + distVariations,
-      baseLevelAngle + angleVariations
-    );
-    const secondLevelCollection = nodeCollection.createNodeCollection({
-      centerOffsetX: pos.x,
-      centerOffsetY: pos.y,
-      radius: 60,
-      showChildrenLink: true,
-      isExpanded: false,
-      // canToggleExpandState: false,
-    });
-
-    for (let j = 0; j < 3; j++) {
-      const angleRange = 140;
-      const secondLevelAngle = (j / 3) * angleRange;
-      const angleOffset = -angleRange / 3;
-      const angleVariations = generateRandomFromRange(0, 20);
-
-      const pos = getPositionFromAngleRadius(
-        160,
-        baseLevelAngle + secondLevelAngle + angleOffset + angleVariations
-      );
-      const thirdLevelCollection = secondLevelCollection.createNodeCollection({
-        centerOffsetX: pos.x,
-        centerOffsetY: pos.y,
-        radius: 30,
-        isExpanded: false,
-        canToggleExpandState: true,
-        showChildrenLink: true,
-      });
-
-      for (let j = 0; j < 3; j++) {
-        const angleRange = 80;
-        const angle2 = (j / 3) * angleRange;
-        const angleOffset2 = angleOffset - angleRange / 3;
-        const dist = generateRandomFromRange(60, 120);
-        const angleVariations = generateRandomFromRange(-10, 10);
-
-        const pos = getPositionFromAngleRadius(
-          dist,
-          baseLevelAngle +
-            secondLevelAngle +
-            angle2 +
-            angleOffset2 +
-            angleVariations
-        );
-        const thirdLevelCollection2 = thirdLevelCollection.createNodeCollection(
-          {
-            centerOffsetX: pos.x,
-            centerOffsetY: pos.y,
-            radius: 15,
-            isExpanded: false,
-            canToggleExpandState: true,
-          }
-        );
-
-        // for (let k = 0; k < 8; k++) {
-        //   const angleRange = 100;
-        //   const angle = (k / 8) * angleRange;
-        //   const angleOffset3 = angleOffset - angleRange / 8;
-        //   const dist = generateRandomFromRange(50, 200);
-        //   const angleVariations = generateRandomFromRange(0, 0);
-        //   const pos = getPositionFromAngleRadius(
-        //     dist,
-        //     baseLevelAngle + angle + angleVariations + angleOffset3
-        //   );
-        //   thirdLevelCollection2.createNode({
-        //     centerOffsetX: pos.x,
-        //     centerOffsetY: pos.y,
-        //     initialScale: generateRandomFromRange(0.2, 0.5),
-        //     color: "rgba(0,0,0,.1)",
-        //   });
-        // }
-      }
-    }
-  }*/
 }
 
 function update(canvasRenderer: CanvasRenderer) {
@@ -191,4 +110,5 @@ function update(canvasRenderer: CanvasRenderer) {
   // render update
   updateNodeCollection(nodeCollection, mouse, viewportAnchor);
   renderNodeCollection(nodeCollection, canvasRenderer);
+  renderNodeText(nodeCollection, canvasRenderer);
 }

@@ -374,7 +374,7 @@ export function renderNodeCollection(
   context.globalAlpha = 1;
 
   if (nodeCollection.image) {
-    context.drawImage(
+    canvasRenderer.context.drawImage(
       nodeCollection.image,
       nodeCollection.x - nodeCollection.radius,
       nodeCollection.y - nodeCollection.radius,
@@ -382,4 +382,25 @@ export function renderNodeCollection(
       nodeCollection.radius * 2
     );
   }
+}
+
+export function renderNodeText(
+  nodeCollection: NodeCollection,
+  canvasRenderer: CanvasRenderer
+) {
+  if (nodeCollection.label && nodeCollection.isHovering) {
+    const fontSize = 16;
+    canvasRenderer.context.fillStyle = "#333";
+    canvasRenderer.context.font = `${fontSize}px sans-serif`;
+    canvasRenderer.context.fillText(
+      nodeCollection.label,
+      nodeCollection.x + nodeCollection.radius + 10,
+      nodeCollection.y + fontSize * 0.45
+    );
+  }
+
+  if (!nodeCollection.nodes) return;
+  nodeCollection.nodes.forEach((node) =>
+    renderNodeText(node as NodeCollection, canvasRenderer)
+  );
 }
