@@ -1,4 +1,5 @@
 import { NodeCollection } from "./cloud/NodeCollection";
+import { createScrollOffsetProvider } from "./scrollOffsetProvider";
 
 export interface PointerState {
   x: number;
@@ -18,7 +19,10 @@ export interface PointerState {
   hoveringCollection: null | NodeCollection;
 }
 
-export function createPointerStateProvider(): PointerState {
+export function createPointerStateProvider(
+  canvas: HTMLCanvasElement
+): PointerState {
+  const scrollOffset = createScrollOffsetProvider(canvas);
   const pointerState: PointerState = {
     x: 0,
     y: 0,
@@ -39,7 +43,7 @@ export function createPointerStateProvider(): PointerState {
 
   function handlePointerMove(e: PointerEvent) {
     pointerState.x = e.clientX;
-    pointerState.y = e.clientY;
+    pointerState.y = e.clientY + scrollOffset.y;
   }
   function handlePointerDown(e: PointerEvent) {
     pointerState.isPressed = true;

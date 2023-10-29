@@ -1,6 +1,9 @@
 import { createPointerStateProvider, updatePointerState } from "./pointer";
 import {
   CanvasRenderer,
+  GetInitFunctionReturns,
+  InitFunction,
+  UpdateFunction,
   createCanvasRenderer,
 } from "./rendering/CanvasRenderer";
 import { createViewportAnchor, updateViewportAnchor } from "./ViewportAnchor";
@@ -29,14 +32,15 @@ window.setupSuperpowerGraph = (element: HTMLElement) => {
 };
 window.addEventListener("load", () => {
   const host = window.location.host;
-  if (host.indexOf("localhost") !== -1 || host.indexOf("netlify.app") !== -1) {
+  if (
+    host.indexOf("localhost") !== -1 ||
+    host.indexOf("superpower-dev.netlify.app") !== -1
+  ) {
     //@ts-ignore
     window.setupSuperpowerGraph(document.body);
   }
 });
 
-const mouse = createPointerStateProvider();
-const tree = buildTreeFromData();
 // const nodeCollection = createNodeCollection({
 //   radius: 100,
 //   showChildrenLink: true,
@@ -51,11 +55,13 @@ let nodeCollection: NodeCollection;
 
 const viewportAnchor = createViewportAnchor();
 
-async function init({ canvas, context }: CanvasRenderer) {
+const init = async ({ canvas, context }: CanvasRenderer) => {
   viewportAnchor.x = canvas.width / 2;
   viewportAnchor.y = canvas.height / 2;
 
   const allImages = await getAllImagesFromData();
+  const mouse = createPointerStateProvider(canvas);
+  const tree = buildTreeFromData();
 
   nodeCollection = createAllNodesFromTree(
     tree,
@@ -111,13 +117,19 @@ async function init({ canvas, context }: CanvasRenderer) {
       });
     }
   )[0];
-}
 
-function update(canvasRenderer: CanvasRenderer) {
+  return {
+    nodeCollection,
+    mouse,
+  };
+};
+
+const update: UpdateFunction<typeof init> = (canvasRenderer, state) => {
+  const { nodeCollection, mouse } = state;
   updatePointerState(mouse);
   updateViewportAnchor(mouse, canvasRenderer, viewportAnchor);
   // render update
   updateNodeCollection(nodeCollection, mouse, viewportAnchor);
   renderNodeCollection(nodeCollection, canvasRenderer);
   renderNodeText(nodeCollection, canvasRenderer);
-}
+};

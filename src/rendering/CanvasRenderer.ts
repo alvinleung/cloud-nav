@@ -5,17 +5,28 @@ export interface CanvasRenderer {
   context: CanvasRenderingContext2D;
   cleanup: () => void;
 }
-export interface CanvasRendererConfig {
+
+export interface CanvasRendererConfig<T> {
   elm: HTMLElement;
-  init: (renderer: CanvasRenderer) => Promise<any>;
-  update: (renderer: CanvasRenderer) => void;
+  init: (renderer: CanvasRenderer) => Promise<T>;
+  update: (renderer: CanvasRenderer, params: T) => void;
 }
 
-export function createCanvasRenderer({
+export type PromiseReturnType<T> = T extends Promise<infer Return> ? Return : T;
+export type InitFunction = (renderer: CanvasRenderer) => Promise<any>;
+export type GetInitFunctionReturns<T extends InitFunction> = Awaited<
+  ReturnType<T>
+>;
+export type UpdateFunction<T extends InitFunction> = (
+  canvasRenderer: CanvasRenderer,
+  params: GetInitFunctionReturns<T>
+) => void;
+
+export function createCanvasRenderer<T>({
   elm,
   init,
   update,
-}: CanvasRendererConfig): CanvasRenderer {
+}: CanvasRendererConfig<T>): CanvasRenderer {
   const canvas = createFullScreenCanvas();
   const context = canvas.getContext("2d") as CanvasRenderingContext2D;
   // add canvas to document
@@ -28,15 +39,16 @@ export function createCanvasRenderer({
   };
 
   let animFrame = 0;
+  let initialParams: GetInitFunctionReturns<typeof init>;
   // init
   function updateFrame() {
     renderer.context.clearRect(0, 0, canvas.width, canvas.height);
-    update(renderer);
+    update(renderer, initialParams);
     animFrame = requestAnimationFrame(updateFrame);
   }
 
   async function initCanvas() {
-    await init(renderer);
+    initialParams = await init(renderer);
     animFrame = requestAnimationFrame(updateFrame);
   }
   initCanvas();
