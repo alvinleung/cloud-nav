@@ -126,6 +126,7 @@ const init = async ({ canvas, context }: CanvasRenderer) => {
 
 const update: UpdateFunction<typeof init> = (canvasRenderer, state) => {
   const { nodeCollection, mouse } = state;
+
   updatePointerState(mouse);
   updateViewportAnchor(mouse, canvasRenderer, viewportAnchor);
   // render update

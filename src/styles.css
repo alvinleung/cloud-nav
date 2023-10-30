@@ -1,3 +1,7 @@
 canvas {
   /* cursor: grab; */
 }
+
+body {
+  height: 200vh;
+}

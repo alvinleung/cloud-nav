@@ -42,7 +42,7 @@ export function createPointerStateProvider(
   };
 
   function handlePointerMove(e: PointerEvent) {
-    pointerState.x = e.clientX;
+    pointerState.x = e.clientX + scrollOffset.x;
     pointerState.y = e.clientY + scrollOffset.y;
   }
   function handlePointerDown(e: PointerEvent) {
