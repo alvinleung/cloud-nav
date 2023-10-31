@@ -285,7 +285,7 @@ function onEnterHover(nodeCollection: NodeCollection) {
   updateOtherNodeCollections(
     nodeCollection,
     (collection) => {
-      collection.targetOpacity = 0.3;
+      collection.targetOpacity = 0.2;
     },
     true
   );
@@ -378,6 +378,7 @@ export function renderNodeCollection(
   context.globalAlpha = 1;
 
   if (nodeCollection.image) {
+    context.globalAlpha = nodeCollection.opacity;
     canvasRenderer.context.drawImage(
       nodeCollection.image,
       nodeCollection.x - nodeCollection.radius,
@@ -385,6 +386,7 @@ export function renderNodeCollection(
       nodeCollection.radius * 2,
       nodeCollection.radius * 2
     );
+    context.globalAlpha = 1;
   }
 }
 
