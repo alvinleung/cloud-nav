@@ -10,9 +10,10 @@ export function createScrollOffsetProvider(canvas: HTMLCanvasElement) {
     scrollInfo.y = window.scrollY - canvasOffsetY;
   }
   window.addEventListener("scroll", (e) => updateScrollY());
+  window.addEventListener("resize", (e) => calculateCanvasOffset());
   function calculateCanvasOffset() {
     canvasOffsetY = canvas.getBoundingClientRect().top + window.scrollY;
-    scrollInfo.x = canvas.getBoundingClientRect().left;
+    scrollInfo.x = -canvas.getBoundingClientRect().left;
     updateScrollY();
   }
 
