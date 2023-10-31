@@ -4,7 +4,7 @@ import { getRandomColor } from "../utils/getRandomColor";
 import { generateRandomFromRange } from "../utils/utils";
 import { followTarget } from "./FollowTarget";
 import { MovablePoint } from "./Point";
-import { Node, createNode, renderNode, updateNode } from "./Node";
+import { Node, createNode, renderNode, updateNode } from "./Node1";
 import { PointerState } from "../pointer";
 
 export interface NodeCollection extends Node {
@@ -310,6 +310,10 @@ function updateNodeCollectionDrag(
   if (pointerstate.hasPointerUp) {
     nodeCollection.isDragging = false;
   }
+}
+
+function repelOtherNodes(nodeCollection: NodeCollection) {
+  // other nodes
 }
 
 export function isPointWithinNode(x: number, y: number, node: Node) {
