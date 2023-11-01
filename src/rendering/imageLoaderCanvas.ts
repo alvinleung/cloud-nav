@@ -29,6 +29,7 @@ export function loadImage(src: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
     // Asynchronously load an image
     var image = new Image();
+    image.crossOrigin = "Anonymous";
     image.addEventListener("load", function () {
       resolve(image);
     });

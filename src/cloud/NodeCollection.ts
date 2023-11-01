@@ -39,7 +39,10 @@ export function createNodeCollection(
     scale: withDefault(config.scale, 1),
     initialScale: withDefault(config.initialScale, 1),
     radius: withDefault(config.radius, 10),
-    color: getRandomColor(),
+    // color: getRandomColor(),
+    color: config.image
+      ? getRGBAString(getAverageRGB(config.image))
+      : getParentColour(parentCollection),
     responsiveness: generateRandomFromRange(0.08, 0.14),
     parentCollection: parentCollection,
     isHovering: false,
@@ -74,6 +77,51 @@ export function createNodeCollection(
     label: config.label,
   };
   return collection;
+}
+
+function getAverageRGB(img: HTMLImageElement) {
+  const context = document
+    .createElement("canvas")
+    .getContext("2d") as CanvasRenderingContext2D;
+  if (typeof img == "string") {
+    var src = img;
+    img = new Image();
+    img.setAttribute("crossOrigin", "");
+    img.src = src;
+  }
+  context.imageSmoothingEnabled = true;
+  context.drawImage(img, 0, 0, 1, 1);
+  //@ts-ignore
+  const rgbArr: [number, number, number] = context
+    .getImageData(0, 0, 1, 1)
+    .data.slice(0, 3);
+
+  return rgbArr;
+}
+
+function varyRGB(
+  rgb: [number, number, number],
+  variation: number = 60
+): [number, number, number] {
+  return [
+    rgb[0] + Math.random() * variation,
+    rgb[1] + Math.random() * variation,
+    rgb[2] + Math.random() * variation,
+  ];
+}
+function getRGBAString(rgbArr: [number, number, number]) {
+  return `rgba(${rgbArr[0]}, ${rgbArr[1]}, ${rgbArr[2]}, 1)`;
+}
+
+function getParentColour(parent?: NodeCollection) {
+  if (!parent) return "#FFF";
+  if (parent.image) {
+    const parentRGB = getAverageRGB(parent.image);
+    const variedRGB = varyRGB(parentRGB);
+    return getRGBAString(variedRGB);
+  }
+  if (!parent.parentCollection) return "#FFF";
+  return getParentColour(parent.parentCollection);
 }
 
 export function updateNodeCollection(
@@ -361,13 +409,14 @@ export function renderNodeCollection(
   const isParentExpanded =
     !nodeCollection.parentCollection ||
     nodeCollection.parentCollection?.isExpanded;
-  context.globalAlpha = isParentExpanded ? 1 : 0.8;
+  context.globalAlpha = nodeCollection.opacity;
   context.fillStyle = "#FFF";
   context.fill();
-  context.fillStyle = nodeCollection.isHovering
-    ? "#999"
-    : `rgba(180,180,180,${nodeCollection.opacity})`;
-  context.strokeStyle = nodeCollection.color;
+  // context.fillStyle = nodeCollection.isHovering
+  //   ? "#999"
+  //   : `rgba(180,180,180,${nodeCollection.opacity})`;
+  context.fillStyle = nodeCollection.image ? "#FFF" : nodeCollection.color;
+  // context.strokeStyle = "#CCC";
   context.fill();
   // context.stroke();
   context.closePath();
