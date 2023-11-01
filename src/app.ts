@@ -47,7 +47,10 @@ window.addEventListener("load", () => {
     host.indexOf("superpower-dev.netlify.app") !== -1
   ) {
     //@ts-ignore
-    window.setupSuperpowerGraph(document.body);
+    window.setupSuperpowerGraph(
+      document.body,
+      "https://daybreak-superpower.netlify.app/force-graph/images/"
+    );
   }
 });
 
@@ -60,6 +63,10 @@ window.addEventListener("load", () => {
 
 function getDegree(rad: number) {
   return (rad * 180) / Math.PI;
+}
+
+function getFullImageURL(src: string) {
+  return imagePrefixURL + src;
 }
 
 const init = async ({ canvas, context }: CanvasRenderer) => {
@@ -82,7 +89,7 @@ const init = async ({ canvas, context }: CanvasRenderer) => {
           showChildrenLink: true,
           isExpanded: true,
           canToggleExpandState: false,
-          image: allImages[nodeInfo.img],
+          image: allImages[getFullImageURL(nodeInfo.img)],
         });
 
       const siblingCount = nodeInfo.parent?.children.length || 0;
@@ -102,7 +109,7 @@ const init = async ({ canvas, context }: CanvasRenderer) => {
           isExpanded: false,
           canToggleExpandState: true,
           showChildrenLink: true,
-          image: allImages[nodeInfo.img],
+          image: allImages[getFullImageURL(nodeInfo.img)],
           label: nodeInfo.id,
         });
       }
@@ -120,7 +127,7 @@ const init = async ({ canvas, context }: CanvasRenderer) => {
         isExpanded: false,
         canToggleExpandState: true,
         showChildrenLink: true,
-        image: allImages[nodeInfo.img],
+        image: allImages[getFullImageURL(nodeInfo.img)],
         label: nodeInfo.id,
       });
     }

@@ -18,6 +18,7 @@ export async function getAllImagesFromData(urlPrefix: string = "") {
     .map((node) => node.img)
     .map((src) => urlPrefix + src);
   const allImages = await loadAllImages(imgUrls);
+
   return allImages;
 }
 

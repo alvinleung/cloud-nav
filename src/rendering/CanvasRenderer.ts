@@ -40,6 +40,7 @@ export function createCanvasRenderer<T>({
 
   let animFrame = 0;
   let initialParams: GetInitFunctionReturns<typeof init>;
+  let isCanvasInView = false;
   // init
   function updateFrame() {
     renderer.context.clearRect(0, 0, canvas.width, canvas.height);
@@ -56,6 +57,24 @@ export function createCanvasRenderer<T>({
   function cleanup() {
     cancelAnimationFrame(animFrame);
   }
+
+  // init intersection observer here
+  let options = {
+    root: document.querySelector("#scrollArea"),
+    rootMargin: "0px",
+    threshold: 1.0,
+  };
+
+  let observer = new IntersectionObserver((e) => {
+    e.forEach((entry) => {
+      if (entry.isIntersecting) {
+        console.log("in view");
+        return;
+      }
+      console.log("exit view");
+    });
+  }, options);
+  observer.observe(canvas);
 
   return renderer;
 }
