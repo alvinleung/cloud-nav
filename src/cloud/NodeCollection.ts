@@ -484,7 +484,7 @@ export function renderNodeText(
     );
 
     canvasRenderer.context.fillStyle = "#333";
-    canvasRenderer.context.font = `${fontSize}px sans-serif`;
+    canvasRenderer.context.font = `${fontSize}px 'Nb International Pro', sans-serif`;
 
     canvasRenderer.context.fillText(
       nodeCollection.label,
