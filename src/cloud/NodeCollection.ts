@@ -312,10 +312,6 @@ function updateNodeCollectionDrag(
   }
 }
 
-function repelOtherNodes(nodeCollection: NodeCollection) {
-  // other nodes
-}
-
 export function isPointWithinNode(x: number, y: number, node: Node) {
   return (
     Math.pow(node.x - x, 2) + Math.pow(node.y - y, 2) < Math.pow(node.radius, 2)

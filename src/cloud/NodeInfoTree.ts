@@ -13,8 +13,10 @@ export interface NodeInfo {
   parent: NodeInfo | null;
 }
 
-export async function getAllImagesFromData() {
-  const imgUrls = data.nodes.map((node) => node.img);
+export async function getAllImagesFromData(urlPrefix: string = "") {
+  const imgUrls = data.nodes
+    .map((node) => node.img)
+    .map((src) => urlPrefix + src);
   const allImages = await loadAllImages(imgUrls);
   return allImages;
 }

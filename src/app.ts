@@ -21,9 +21,19 @@ import {
   createAllNodesFromTree,
   getAllImagesFromData,
 } from "./cloud/NodeInfoTree";
+import {
+  createCollisionSystem,
+  updateCollisionSystem,
+} from "./cloud/CollisionSystem";
 
+let imagePrefixURL = "";
 //@ts-ignore
-window.setupSuperpowerGraph = (element: HTMLElement) => {
+window.setupSuperpowerGraph = (
+  element: HTMLElement,
+  imageAssetURLPrefix: string = ""
+) => {
+  // inject the url here
+  imagePrefixURL = imageAssetURLPrefix;
   createCanvasRenderer({
     elm: element,
     init,
@@ -51,19 +61,17 @@ window.addEventListener("load", () => {
 function getDegree(rad: number) {
   return (rad * 180) / Math.PI;
 }
-let nodeCollection: NodeCollection;
-
-const viewportAnchor = createViewportAnchor();
 
 const init = async ({ canvas, context }: CanvasRenderer) => {
+  const viewportAnchor = createViewportAnchor();
   viewportAnchor.x = canvas.width / 2;
   viewportAnchor.y = canvas.height / 2;
 
-  const allImages = await getAllImagesFromData();
+  const allImages = await getAllImagesFromData(imagePrefixURL);
   const mouse = createPointerStateProvider(canvas);
   const tree = buildTreeFromData();
 
-  nodeCollection = createAllNodesFromTree(
+  const nodeCollection = createAllNodesFromTree(
     tree,
     (nodeInfo, parentNode, level, index) => {
       if (!parentNode)
@@ -118,14 +126,18 @@ const init = async ({ canvas, context }: CanvasRenderer) => {
     }
   )[0];
 
+  const collisionSystemInfo = createCollisionSystem(nodeCollection);
+
   return {
     nodeCollection,
+    collisionSystemInfo,
     mouse,
+    viewportAnchor,
   };
 };
 
 const update: UpdateFunction<typeof init> = (canvasRenderer, state) => {
-  const { nodeCollection, mouse } = state;
+  const { nodeCollection, mouse, collisionSystemInfo, viewportAnchor } = state;
 
   updatePointerState(mouse);
   updateViewportAnchor(mouse, canvasRenderer, viewportAnchor);
@@ -133,4 +145,6 @@ const update: UpdateFunction<typeof init> = (canvasRenderer, state) => {
   updateNodeCollection(nodeCollection, mouse, viewportAnchor);
   renderNodeCollection(nodeCollection, canvasRenderer);
   renderNodeText(nodeCollection, canvasRenderer);
+
+  updateCollisionSystem(collisionSystemInfo);
 };
