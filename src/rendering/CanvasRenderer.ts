@@ -45,7 +45,11 @@ export function createCanvasRenderer<T>({
   function updateFrame() {
     if (!isActive) return;
     renderer.context.clearRect(0, 0, canvas.width, canvas.height);
+    // renderer.context.save();
+    // renderer.context.scale(2, 2);
+    // renderer.context.translate(-canvas.width / 4, -canvas.height / 4);
     update(renderer, initialParams);
+    // renderer.context.restore();
     animFrame = requestAnimationFrame(updateFrame);
   }
 

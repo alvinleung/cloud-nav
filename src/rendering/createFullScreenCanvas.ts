@@ -1,5 +1,5 @@
 export function createFullScreenCanvas() {
-  const canvas = document.createElement("canvas");
+  const canvas = document.createElement("canvas") as HTMLCanvasElement;
   canvas.width = window.innerWidth;
   canvas.height = 1080;
   canvas.style.display = "block";
