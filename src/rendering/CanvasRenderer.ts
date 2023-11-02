@@ -78,11 +78,11 @@ export function createCanvasRenderer<T>({
   let observer = new IntersectionObserver((e) => {
     e.forEach((entry) => {
       if (entry.isIntersecting) {
-        console.log("in view");
+        // console.log("in view");
         resumeUpdateFrame();
         return;
       }
-      console.log("exit view");
+      // console.log("exit view");
       puaseUpdateFrame();
     });
   }, options);
