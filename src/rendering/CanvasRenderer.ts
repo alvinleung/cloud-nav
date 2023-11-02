@@ -40,9 +40,10 @@ export function createCanvasRenderer<T>({
 
   let animFrame = 0;
   let initialParams: GetInitFunctionReturns<typeof init>;
-  let isCanvasInView = false;
+  let isActive = true;
   // init
   function updateFrame() {
+    if (!isActive) return;
     renderer.context.clearRect(0, 0, canvas.width, canvas.height);
     update(renderer, initialParams);
     animFrame = requestAnimationFrame(updateFrame);
@@ -50,7 +51,7 @@ export function createCanvasRenderer<T>({
 
   async function initCanvas() {
     initialParams = await init(renderer);
-    animFrame = requestAnimationFrame(updateFrame);
+    updateFrame();
   }
   initCanvas();
 
@@ -58,20 +59,31 @@ export function createCanvasRenderer<T>({
     cancelAnimationFrame(animFrame);
   }
 
+  function resumeUpdateFrame() {
+    if (isActive) return;
+    isActive = true;
+    updateFrame();
+  }
+  function puaseUpdateFrame() {
+    isActive = false;
+  }
+
   // init intersection observer here
   let options = {
     root: document.querySelector("#scrollArea"),
     rootMargin: "0px",
-    threshold: 1.0,
+    threshold: [0, 1.0],
   };
 
   let observer = new IntersectionObserver((e) => {
     e.forEach((entry) => {
       if (entry.isIntersecting) {
         console.log("in view");
+        resumeUpdateFrame();
         return;
       }
       console.log("exit view");
+      puaseUpdateFrame();
     });
   }, options);
   observer.observe(canvas);

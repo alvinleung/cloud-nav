@@ -1,9 +1,9 @@
 canvas {
   /* cursor: grab; */
-  background-color: white;
+  /* background-color: white; */
 }
 
 body {
-  height: 200vh;
-  background-color: black;
+  height: 300vh;
+  /* background-color: black; */
 }
